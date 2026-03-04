@@ -61,6 +61,98 @@ const navItems = [
 
 type AppTab = 'overview' | 'admin';
 
+type TooltipRow = {
+  color?: string;
+  dataKey?: string | number;
+  name?: string;
+  payload?: Record<string, unknown>;
+  value?: number | string | Array<number | string>;
+};
+
+interface DashboardTooltipProps {
+  active?: boolean;
+  label?: string | number;
+  payload?: TooltipRow[];
+  valueFormatter?: (value: number, row: TooltipRow) => string;
+  lineFormatter?: (row: TooltipRow, value: number) => string | null;
+}
+
+const toNumber = (value: unknown): number | null => {
+  if (typeof value === 'number' && Number.isFinite(value)) {
+    return value;
+  }
+
+  if (typeof value === 'string' && value.trim().length > 0) {
+    const parsed = Number(value);
+    if (Number.isFinite(parsed)) {
+      return parsed;
+    }
+  }
+
+  return null;
+};
+
+const getPayloadNumber = (row: TooltipRow, key: string): number | null => {
+  if (!row.payload || typeof row.payload !== 'object') {
+    return null;
+  }
+
+  return toNumber(row.payload[key]);
+};
+
+const DashboardTooltip = ({
+  active,
+  label,
+  payload,
+  valueFormatter = (value) => formatNumber(value),
+  lineFormatter,
+}: DashboardTooltipProps) => {
+  if (!active || !payload || payload.length === 0) {
+    return null;
+  }
+
+  const rows = payload.filter((row) => toNumber(row.value) !== null);
+  if (rows.length === 0) {
+    return null;
+  }
+
+  const labelText =
+    typeof label === 'number' ? formatNumber(label) : typeof label === 'string' ? label : 'Details';
+
+  return (
+    <div className="pointer-events-none min-w-[10rem] rounded-md border border-slate-300/90 bg-white/95 px-2.5 py-2 text-xs shadow-lg backdrop-blur-sm dark:border-slate-600 dark:bg-slate-900/95">
+      <p className="font-semibold text-slate-900 dark:text-slate-100">{labelText}</p>
+      <ul className="mt-1.5 space-y-1">
+        {rows.map((row) => {
+          const numericValue = toNumber(row.value);
+          if (numericValue === null) {
+            return null;
+          }
+
+          const rowLabel = row.name ?? (typeof row.dataKey === 'string' ? row.dataKey : 'Value');
+          const detail = lineFormatter?.(row, numericValue);
+
+          return (
+            <li key={`${String(row.dataKey ?? rowLabel)}-${rowLabel}`} className="flex items-start gap-2">
+              <span
+                className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full"
+                style={{ backgroundColor: row.color ?? chartPalette.brand }}
+              />
+              <span className="text-slate-700 dark:text-slate-200">
+                <span className="font-medium text-slate-800 dark:text-slate-100">{rowLabel}:</span>{' '}
+                {valueFormatter(numericValue, row)}
+                {detail ? (
+                  <span className="text-slate-500 dark:text-slate-300">{` (${detail})`}</span>
+                ) : null}
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+};
+
 const getInitialTheme = (): 'light' | 'dark' => {
   if (typeof window === 'undefined') {
     return 'light';
@@ -205,7 +297,6 @@ const App = () => {
   const legendTextColor = theme === 'dark' ? '#e2e8f0' : '#334155';
   const gridStroke = theme === 'dark' ? '#33415599' : '#94a3b840';
   const activeStroke = theme === 'dark' ? '#f8fafc' : '#0f172a';
-  const hideTooltipContent = () => null;
 
   return (
     <div className="min-h-screen text-slate-900 transition-colors duration-300 dark:text-slate-100">
@@ -375,7 +466,18 @@ const App = () => {
                           tick={{ fill: axisTickColor, fontSize: 12 }}
                         />
                         <YAxis tick={{ fill: axisTickColor, fontSize: 12 }} width={68} />
-                        <Tooltip cursor={false} content={hideTooltipContent} />
+                        <Tooltip
+                          cursor={false}
+                          content={
+                            <DashboardTooltip
+                              valueFormatter={(value) => formatNumber(value)}
+                              lineFormatter={(row) => {
+                                const pct = getPayloadNumber(row, 'pct');
+                                return pct === null ? null : `${formatPercent(pct)} of statewide ballots`;
+                              }}
+                            />
+                          }
+                        />
                         <Bar
                           dataKey="count"
                           fill={chartPalette.brand}
@@ -454,7 +556,10 @@ const App = () => {
                       <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
                       <XAxis dataKey="party" tick={{ fill: axisTickColor, fontSize: 12 }} />
                       <YAxis unit="%" tick={{ fill: axisTickColor, fontSize: 12 }} />
-                      <Tooltip cursor={false} content={hideTooltipContent} />
+                      <Tooltip
+                        cursor={false}
+                        content={<DashboardTooltip valueFormatter={(value) => formatPercent(value)} />}
+                      />
                       <Legend verticalAlign="top" height={28} wrapperStyle={{ color: legendTextColor, fontSize: '12px' }} />
                       <Bar
                         dataKey="registrationPct"
@@ -494,7 +599,26 @@ const App = () => {
                       <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
                       <XAxis dataKey="party" tick={{ fill: axisTickColor, fontSize: 12 }} />
                       <YAxis unit="%" tick={{ fill: axisTickColor, fontSize: 12 }} />
-                      <Tooltip cursor={false} content={hideTooltipContent} />
+                      <Tooltip
+                        cursor={false}
+                        content={
+                          <DashboardTooltip
+                            valueFormatter={(value) => formatPercent(value)}
+                            lineFormatter={(row) => {
+                              const ballots = getPayloadNumber(row, 'count');
+                              const sharePct = getPayloadNumber(row, 'sharePct');
+                              const details: string[] = [];
+                              if (ballots !== null) {
+                                details.push(`${formatNumber(ballots)} ballots`);
+                              }
+                              if (sharePct !== null) {
+                                details.push(`${formatPercent(sharePct)} statewide share`);
+                              }
+                              return details.length > 0 ? details.join(' · ') : null;
+                            }}
+                          />
+                        }
+                      />
                       <Bar
                         dataKey="turnoutPct"
                         fill={chartPalette.blue}
@@ -604,7 +728,22 @@ const App = () => {
                       <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
                       <XAxis dataKey="county" tick={{ fill: axisTickColor, fontSize: 12 }} />
                       <YAxis tick={{ fill: axisTickColor, fontSize: 12 }} width={60} />
-                      <Tooltip cursor={false} content={hideTooltipContent} />
+                      <Tooltip
+                        cursor={false}
+                        content={
+                          <DashboardTooltip
+                            valueFormatter={(value) => formatNumber(value)}
+                            lineFormatter={(row) => {
+                              const countyTotal = getPayloadNumber(row, 'total');
+                              if (countyTotal === null || nc119DistrictTotal <= 0) {
+                                return null;
+                              }
+
+                              return `${formatPercent((countyTotal / nc119DistrictTotal) * 100)} of district total`;
+                            }}
+                          />
+                        }
+                      />
                       <Bar
                         dataKey="total"
                         fill={chartPalette.violet}
@@ -638,7 +777,27 @@ const App = () => {
                       <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
                       <XAxis dataKey="county" tick={{ fill: axisTickColor, fontSize: 12 }} />
                       <YAxis tick={{ fill: axisTickColor, fontSize: 12 }} width={60} />
-                      <Tooltip cursor={false} content={hideTooltipContent} />
+                      <Tooltip
+                        cursor={false}
+                        content={
+                          <DashboardTooltip
+                            valueFormatter={(value) => formatNumber(value)}
+                            lineFormatter={(row, value) => {
+                              const inPerson = getPayloadNumber(row, 'inPersonEarly') ?? 0;
+                              const civilian = getPayloadNumber(row, 'civilianMail') ?? 0;
+                              const military = getPayloadNumber(row, 'militaryMail') ?? 0;
+                              const overseas = getPayloadNumber(row, 'overseasMail') ?? 0;
+                              const countyTotal = inPerson + civilian + military + overseas;
+
+                              if (countyTotal <= 0) {
+                                return null;
+                              }
+
+                              return `${formatPercent((value / countyTotal) * 100)} of ${formatNumber(countyTotal)} county ballots`;
+                            }}
+                          />
+                        }
+                      />
                       <Legend verticalAlign="top" height={28} wrapperStyle={{ color: legendTextColor, fontSize: '12px' }} />
                       <Bar
                         dataKey="inPersonEarly"
