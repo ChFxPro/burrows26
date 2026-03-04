@@ -1,0 +1,95 @@
+{
+  "meta": {
+    "title": "NC119 Primary Dashboard",
+    "subtitle": "Pre-ballot close and election night updates",
+    "source": "NC State Board of Elections – Daily Absentee Stats Report",
+    "sourceFile": "2026-03-03 Daily Absentee Stats Report",
+    "lastUpdatedISO": "2026-03-03T17:00:00-05:00",
+    "dataThroughISO": "2026-03-02T23:59:59-05:00",
+    "notes": [
+      "Ballots cast through March 2, 2026.",
+      "NC119 counties: Jackson, Swain, Transylvania."
+    ]
+  },
+  "statewide": {
+    "eligibleVoters": 7708662,
+    "totalBallotsCast": 714247,
+    "turnoutPct": 9.27,
+    "ballotsByMethod": [
+      { "method": "In-Person Early", "count": 701120 },
+      { "method": "Civilian Mail", "count": 11751 },
+      { "method": "Military Mail", "count": 196 },
+      { "method": "Overseas Mail", "count": 1180 }
+    ],
+    "comparison2022": {
+      "totalAcceptedBallots": 580566,
+      "earlyVoting": 559095,
+      "mailTotal": 21471
+    }
+  },
+  "party": {
+    "registration": [
+      { "party": "Democratic", "count": 2313500, "pct": 30.01 },
+      { "party": "Republican", "count": 2322382, "pct": 30.13 },
+      { "party": "Unaffiliated", "count": 3021604, "pct": 39.2 }
+    ],
+    "ballotsCast": [
+      {
+        "party": "Democratic",
+        "count": 297142,
+        "sharePct": 41.6,
+        "turnoutPct": 12.84
+      },
+      {
+        "party": "Republican",
+        "count": 200739,
+        "sharePct": 28.1,
+        "turnoutPct": 8.64
+      },
+      {
+        "party": "Unaffiliated",
+        "count": 216224,
+        "sharePct": 30.27,
+        "turnoutPct": 7.16
+      }
+    ],
+    "minorPartiesNote": "Minor parties minimal in ballots cast."
+  },
+  "nc119": {
+    "districtLabel": "NC House District 119",
+    "counties": [
+      {
+        "county": "Jackson",
+        "inPersonEarly": 3732,
+        "civilianMail": 87,
+        "militaryMail": 1,
+        "overseasMail": 2,
+        "total": 3822
+      },
+      {
+        "county": "Swain",
+        "inPersonEarly": 1254,
+        "civilianMail": 18,
+        "militaryMail": 1,
+        "overseasMail": 1,
+        "total": 1274
+      },
+      {
+        "county": "Transylvania",
+        "inPersonEarly": 3723,
+        "civilianMail": 60,
+        "militaryMail": 0,
+        "overseasMail": 5,
+        "total": 3788
+      }
+    ]
+  },
+  "electionNight": {
+    "enabled": true,
+    "placeholders": {
+      "precinctsReportingPct": null,
+      "totalVotesSoFar": null,
+      "topRaces": []
+    }
+  }
+}

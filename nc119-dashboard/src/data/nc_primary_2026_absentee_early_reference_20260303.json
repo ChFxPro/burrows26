@@ -1,0 +1,267 @@
+{
+    "meta": {
+      "datasetId": "nc-primary-2026-absentee-early-advref-20260303",
+      "title": "NC 2026 Primary — Absentee & Early Voting (Advanced Reference)",
+      "sourceAgency": "North Carolina State Board of Elections (NCSBE)",
+      "sourceReportTitle": "N.C. Absentee & Early Voting Statistics for the 2026 Primary Election",
+      "sourceFileLabel": "2026-03-03 Daily Absentee Stats Report - 2026 Primary",
+      "publishedDate": "2026-03-03",
+      "dataThroughDate": "2026-03-02",
+      "timezone": "America/Toronto",
+      "provenance": {
+        "extractedFrom": [
+          {
+            "type": "pdf",
+            "name": "2026-03-03 Daily Absentee Stats Report - 2026 Primary.pdf",
+            "notes": "Values transcribed from the report tables."
+          }
+        ],
+        "reportNotes": [
+          "Ballots cast through 03/02/2026.",
+          "Data sources listed in report: absentee_counts_state_20260303.csv, absentee_20220517.zip."
+        ]
+      }
+    },
+  
+    "statewide": {
+      "eligibleVoters": 7708662,
+      "ballotsCastTotal": 714247,
+      "turnoutPctTotal": 9.27,
+      "ballotsByMethod": {
+        "inPersonEarly": 701120,
+        "civilianMail": 11751,
+        "militaryMail": 196,
+        "overseasMail": 1180
+      },
+      "methodSharesPct": {
+        "inPersonEarly": 98.162,
+        "civilianMail": 1.645,
+        "militaryMail": 0.027,
+        "overseasMail": 0.165
+      },
+      "comparisonTo2022": {
+        "ballotsCastThisTimeIn2022": {
+          "earlyVoting": 559095,
+          "civilianMilitaryOverseas": 21471,
+          "totalAcceptedBallots": 580566
+        },
+        "deltaVs2022": {
+          "absolute": 133681,
+          "pct": 23.03
+        }
+      }
+    },
+  
+    "party": {
+      "registration": [
+        { "party": "Democratic", "registered": 2313500, "registeredPct": 30.01 },
+        { "party": "Republican", "registered": 2322382, "registeredPct": 30.13 },
+        { "party": "Unaffiliated", "registered": 3021604, "registeredPct": 39.20 },
+        { "party": "Libertarian", "registered": 46686, "registeredPct": 0.61 },
+        { "party": "Green", "registered": 4490, "registeredPct": 0.06 }
+      ],
+      "ballotsCast": [
+        { "party": "Democratic", "ballots": 297142, "turnoutPctWithinParty": 12.84, "ballotSharePct": 41.60 },
+        { "party": "Republican", "ballots": 200739, "turnoutPctWithinParty": 8.64, "ballotSharePct": 28.10 },
+        { "party": "Unaffiliated", "ballots": 216224, "turnoutPctWithinParty": 7.16, "ballotSharePct": 30.27 },
+        { "party": "Libertarian", "ballots": 109, "turnoutPctWithinParty": 0.23, "ballotSharePct": 0.02 },
+        { "party": "Green", "ballots": 33, "turnoutPctWithinParty": 0.73, "ballotSharePct": 0.00 }
+      ],
+      "derived": {
+        "overUnderIndexPctPoints": [
+          { "party": "Democratic", "ballotShareMinusRegistration": 11.59 },
+          { "party": "Republican", "ballotShareMinusRegistration": -2.03 },
+          { "party": "Unaffiliated", "ballotShareMinusRegistration": -8.93 }
+        ],
+        "notes": [
+          "Over/Under Index = ballot share % minus registration % (percentage points).",
+          "Minor parties are included for completeness; impact is minimal."
+        ]
+      }
+    },
+  
+    "demographics": {
+      "race": {
+        "registration": [
+          { "race": "White", "registered": 4910301, "registeredPct": 63.70 },
+          { "race": "Black", "registered": 1488932, "registeredPct": 19.32 },
+          { "race": "Other", "registered": 1309429, "registeredPct": 16.99 }
+        ],
+        "ballotsCast": [
+          { "race": "White", "ballots": 495190, "turnoutPct": 10.08, "ballotSharePct": 69.33 },
+          { "race": "Black", "ballots": 165298, "turnoutPct": 11.10, "ballotSharePct": 23.14 },
+          { "race": "Other", "ballots": 53759, "turnoutPct": 4.11, "ballotSharePct": 7.53 }
+        ]
+      },
+      "ethnicity": {
+        "registration": [
+          { "ethnicity": "Hispanic or Latino", "registered": 346432, "registeredPct": 4.49 },
+          { "ethnicity": "Not Hispanic or Not Latino", "registered": 4934756, "registeredPct": 64.02 },
+          { "ethnicity": "Undesignated", "registered": 2427474, "registeredPct": 31.49 }
+        ],
+        "ballotsCast": [
+          { "ethnicity": "Hispanic or Latino", "ballots": 11804, "turnoutPct": 3.41, "ballotSharePct": 1.65 },
+          { "ethnicity": "Not Hispanic or Not Latino", "ballots": 545250, "turnoutPct": 11.05, "ballotSharePct": 76.34 },
+          { "ethnicity": "Undesignated", "ballots": 157193, "turnoutPct": 6.48, "ballotSharePct": 22.01 }
+        ]
+      },
+      "gender": {
+        "registration": [
+          { "gender": "Female", "registered": 3793843, "registeredPct": 49.22 },
+          { "gender": "Male", "registered": 3235614, "registeredPct": 41.97 },
+          { "gender": "Undesignated", "registered": 679205, "registeredPct": 8.81 }
+        ],
+        "ballotsCast": [
+          { "gender": "Female", "ballots": 393839, "turnoutPct": 10.38, "ballotSharePct": 55.14 },
+          { "gender": "Male", "ballots": 292753, "turnoutPct": 9.05, "ballotSharePct": 40.99 },
+          { "gender": "Undesignated", "ballots": 27655, "turnoutPct": 4.07, "ballotSharePct": 3.87 }
+        ]
+      }
+    },
+  
+    "counties": {
+      "ballotsByCounty": [
+        { "county": "ALAMANCE", "inPersonEarly": 11172, "civilianMail": 211, "militaryMail": 0, "overseasMail": 17, "total": 11400 },
+        { "county": "ALEXANDER", "inPersonEarly": 2807, "civilianMail": 14, "militaryMail": 0, "overseasMail": 1, "total": 2822 },
+        { "county": "ALLEGHANY", "inPersonEarly": 1140, "civilianMail": 7, "militaryMail": 0, "overseasMail": 0, "total": 1147 },
+        { "county": "ANSON", "inPersonEarly": 1724, "civilianMail": 41, "militaryMail": 1, "overseasMail": 1, "total": 1767 },
+        { "county": "ASHE", "inPersonEarly": 2484, "civilianMail": 32, "militaryMail": 2, "overseasMail": 1, "total": 2519 },
+        { "county": "AVERY", "inPersonEarly": 857, "civilianMail": 14, "militaryMail": 0, "overseasMail": 2, "total": 873 },
+        { "county": "BEAUFORT", "inPersonEarly": 4834, "civilianMail": 35, "militaryMail": 1, "overseasMail": 1, "total": 4871 },
+        { "county": "BERTIE", "inPersonEarly": 2304, "civilianMail": 6, "militaryMail": 0, "overseasMail": 0, "total": 2310 },
+        { "county": "BLADEN", "inPersonEarly": 2601, "civilianMail": 35, "militaryMail": 0, "overseasMail": 1, "total": 2637 },
+        { "county": "BRUNSWICK", "inPersonEarly": 15396, "civilianMail": 289, "militaryMail": 1, "overseasMail": 14, "total": 15700 },
+        { "county": "BUNCOMBE", "inPersonEarly": 30773, "civilianMail": 714, "militaryMail": 7, "overseasMail": 68, "total": 31562 },
+        { "county": "BURKE", "inPersonEarly": 5301, "civilianMail": 61, "militaryMail": 0, "overseasMail": 12, "total": 5374 },
+        { "county": "CABARRUS", "inPersonEarly": 7789, "civilianMail": 348, "militaryMail": 2, "overseasMail": 21, "total": 8160 },
+        { "county": "CALDWELL", "inPersonEarly": 5525, "civilianMail": 35, "militaryMail": 0, "overseasMail": 3, "total": 5563 },
+        { "county": "CAMDEN", "inPersonEarly": 517, "civilianMail": 5, "militaryMail": 0, "overseasMail": 1, "total": 523 },
+        { "county": "CARTERET", "inPersonEarly": 7664, "civilianMail": 84, "militaryMail": 3, "overseasMail": 4, "total": 7755 },
+        { "county": "CASWELL", "inPersonEarly": 1612, "civilianMail": 16, "militaryMail": 0, "overseasMail": 0, "total": 1628 },
+        { "county": "CATAWBA", "inPersonEarly": 11135, "civilianMail": 234, "militaryMail": 1, "overseasMail": 3, "total": 11373 },
+        { "county": "CHATHAM", "inPersonEarly": 9756, "civilianMail": 233, "militaryMail": 1, "overseasMail": 9, "total": 9999 },
+        { "county": "CHEROKEE", "inPersonEarly": 2309, "civilianMail": 28, "militaryMail": 0, "overseasMail": 2, "total": 2339 },
+        { "county": "CHOWAN", "inPersonEarly": 1178, "civilianMail": 15, "militaryMail": 0, "overseasMail": 1, "total": 1194 },
+        { "county": "CLAY", "inPersonEarly": 1619, "civilianMail": 10, "militaryMail": 0, "overseasMail": 2, "total": 1631 },
+        { "county": "CLEVELAND", "inPersonEarly": 4349, "civilianMail": 74, "militaryMail": 1, "overseasMail": 2, "total": 4426 },
+        { "county": "COLUMBUS", "inPersonEarly": 3093, "civilianMail": 73, "militaryMail": 0, "overseasMail": 0, "total": 3166 },
+        { "county": "CRAVEN", "inPersonEarly": 6661, "civilianMail": 72, "militaryMail": 2, "overseasMail": 5, "total": 6740 },
+        { "county": "CUMBERLAND", "inPersonEarly": 15686, "civilianMail": 144, "militaryMail": 18, "overseasMail": 16, "total": 15864 },
+        { "county": "CURRITUCK", "inPersonEarly": 1447, "civilianMail": 17, "militaryMail": 0, "overseasMail": 0, "total": 1464 },
+        { "county": "DARE", "inPersonEarly": 4245, "civilianMail": 64, "militaryMail": 0, "overseasMail": 2, "total": 4311 },
+        { "county": "DAVIDSON", "inPersonEarly": 10350, "civilianMail": 203, "militaryMail": 1, "overseasMail": 5, "total": 10559 },
+        { "county": "DAVIE", "inPersonEarly": 2922, "civilianMail": 40, "militaryMail": 0, "overseasMail": 3, "total": 2965 },
+        { "county": "DUPLIN", "inPersonEarly": 2484, "civilianMail": 66, "militaryMail": 3, "overseasMail": 0, "total": 2553 },
+        { "county": "DURHAM", "inPersonEarly": 33162, "civilianMail": 373, "militaryMail": 8, "overseasMail": 143, "total": 33686 },
+        { "county": "EDGECOMBE", "inPersonEarly": 3293, "civilianMail": 8, "militaryMail": 1, "overseasMail": 0, "total": 3302 },
+        { "county": "FORSYTH", "inPersonEarly": 22750, "civilianMail": 561, "militaryMail": 3, "overseasMail": 19, "total": 23333 },
+        { "county": "FRANKLIN", "inPersonEarly": 5434, "civilianMail": 90, "militaryMail": 1, "overseasMail": 3, "total": 5528 },
+        { "county": "GASTON", "inPersonEarly": 13114, "civilianMail": 189, "militaryMail": 3, "overseasMail": 8, "total": 13314 },
+        { "county": "GATES", "inPersonEarly": 1105, "civilianMail": 11, "militaryMail": 1, "overseasMail": 1, "total": 1118 },
+        { "county": "GRAHAM", "inPersonEarly": 1111, "civilianMail": 21, "militaryMail": 0, "overseasMail": 0, "total": 1132 },
+        { "county": "GRANVILLE", "inPersonEarly": 5771, "civilianMail": 60, "militaryMail": 0, "overseasMail": 4, "total": 5835 },
+        { "county": "GREENE", "inPersonEarly": 1089, "civilianMail": 24, "militaryMail": 0, "overseasMail": 0, "total": 1113 },
+        { "county": "GUILFORD", "inPersonEarly": 33350, "civilianMail": 451, "militaryMail": 12, "overseasMail": 64, "total": 33877 },
+        { "county": "HALIFAX", "inPersonEarly": 4148, "civilianMail": 28, "militaryMail": 0, "overseasMail": 0, "total": 4176 },
+        { "county": "HARNETT", "inPersonEarly": 5809, "civilianMail": 106, "militaryMail": 4, "overseasMail": 3, "total": 5922 },
+        { "county": "HAYWOOD", "inPersonEarly": 6556, "civilianMail": 103, "militaryMail": 1, "overseasMail": 3, "total": 6663 },
+        { "county": "HENDERSON", "inPersonEarly": 11259, "civilianMail": 215, "militaryMail": 0, "overseasMail": 16, "total": 11490 },
+        { "county": "HERTFORD", "inPersonEarly": 1045, "civilianMail": 0, "militaryMail": 0, "overseasMail": 1, "total": 1046 },
+        { "county": "HOKE", "inPersonEarly": 3558, "civilianMail": 19, "militaryMail": 0, "overseasMail": 0, "total": 3577 },
+        { "county": "HYDE", "inPersonEarly": 291, "civilianMail": 3, "militaryMail": 0, "overseasMail": 0, "total": 294 },
+        { "county": "IREDELL", "inPersonEarly": 9282, "civilianMail": 121, "militaryMail": 3, "overseasMail": 8, "total": 9414 },
+        { "county": "JACKSON", "inPersonEarly": 3732, "civilianMail": 87, "militaryMail": 1, "overseasMail": 2, "total": 3822 },
+        { "county": "JOHNSTON", "inPersonEarly": 12385, "civilianMail": 242, "militaryMail": 3, "overseasMail": 10, "total": 12640 },
+        { "county": "JONES", "inPersonEarly": 760, "civilianMail": 2, "militaryMail": 0, "overseasMail": 0, "total": 762 },
+        { "county": "LEE", "inPersonEarly": 3615, "civilianMail": 51, "militaryMail": 2, "overseasMail": 2, "total": 3670 },
+        { "county": "LENOIR", "inPersonEarly": 3042, "civilianMail": 24, "militaryMail": 0, "overseasMail": 0, "total": 3066 },
+        { "county": "LINCOLN", "inPersonEarly": 6397, "civilianMail": 69, "militaryMail": 3, "overseasMail": 3, "total": 6472 },
+        { "county": "MACON", "inPersonEarly": 4935, "civilianMail": 44, "militaryMail": 0, "overseasMail": 1, "total": 4980 },
+        { "county": "MADISON", "inPersonEarly": 1699, "civilianMail": 23, "militaryMail": 0, "overseasMail": 3, "total": 1725 },
+        { "county": "MARTIN", "inPersonEarly": 1003, "civilianMail": 12, "militaryMail": 0, "overseasMail": 1, "total": 1016 },
+        { "county": "MCDOWELL", "inPersonEarly": 3642, "civilianMail": 17, "militaryMail": 0, "overseasMail": 3, "total": 3662 },
+        { "county": "MECKLENBURG", "inPersonEarly": 55647, "civilianMail": 1085, "militaryMail": 12, "overseasMail": 172, "total": 56916 },
+        { "county": "MITCHELL", "inPersonEarly": 2849, "civilianMail": 63, "militaryMail": 0, "overseasMail": 0, "total": 2912 },
+        { "county": "MONTGOMERY", "inPersonEarly": 965, "civilianMail": 22, "militaryMail": 0, "overseasMail": 0, "total": 987 },
+        { "county": "MOORE", "inPersonEarly": 8184, "civilianMail": 163, "militaryMail": 9, "overseasMail": 5, "total": 8361 },
+        { "county": "NASH", "inPersonEarly": 8055, "civilianMail": 73, "militaryMail": 2, "overseasMail": 1, "total": 8131 },
+        { "county": "NEW HANOVER", "inPersonEarly": 14299, "civilianMail": 238, "militaryMail": 8, "overseasMail": 35, "total": 14580 },
+        { "county": "NORTHAMPTON", "inPersonEarly": 2058, "civilianMail": 7, "militaryMail": 0, "overseasMail": 1, "total": 2066 },
+        { "county": "ONSLOW", "inPersonEarly": 6301, "civilianMail": 88, "militaryMail": 8, "overseasMail": 2, "total": 6399 },
+        { "county": "ORANGE", "inPersonEarly": 15417, "civilianMail": 239, "militaryMail": 4, "overseasMail": 136, "total": 15796 },
+        { "county": "PAMLICO", "inPersonEarly": 980, "civilianMail": 11, "militaryMail": 1, "overseasMail": 0, "total": 992 },
+        { "county": "PASQUOTANK", "inPersonEarly": 3235, "civilianMail": 20, "militaryMail": 5, "overseasMail": 1, "total": 3261 },
+        { "county": "PENDER", "inPersonEarly": 4918, "civilianMail": 67, "militaryMail": 0, "overseasMail": 1, "total": 4986 },
+        { "county": "PERQUIMANS", "inPersonEarly": 1023, "civilianMail": 11, "militaryMail": 0, "overseasMail": 0, "total": 1034 },
+        { "county": "PERSON", "inPersonEarly": 2821, "civilianMail": 49, "militaryMail": 0, "overseasMail": 1, "total": 2871 },
+        { "county": "PITT", "inPersonEarly": 9719, "civilianMail": 75, "militaryMail": 1, "overseasMail": 9, "total": 9804 },
+        { "county": "POLK", "inPersonEarly": 2189, "civilianMail": 27, "militaryMail": 1, "overseasMail": 6, "total": 2223 },
+        { "county": "RANDOLPH", "inPersonEarly": 8997, "civilianMail": 142, "militaryMail": 1, "overseasMail": 0, "total": 9140 },
+        { "county": "RICHMOND", "inPersonEarly": 2306, "civilianMail": 4, "militaryMail": 0, "overseasMail": 0, "total": 2310 },
+        { "county": "ROBESON", "inPersonEarly": 3176, "civilianMail": 8, "militaryMail": 0, "overseasMail": 2, "total": 3186 },
+        { "county": "ROCKINGHAM", "inPersonEarly": 10354, "civilianMail": 85, "militaryMail": 0, "overseasMail": 4, "total": 10443 },
+        { "county": "ROWAN", "inPersonEarly": 7391, "civilianMail": 131, "militaryMail": 1, "overseasMail": 3, "total": 7526 },
+        { "county": "RUTHERFORD", "inPersonEarly": 5579, "civilianMail": 52, "militaryMail": 2, "overseasMail": 4, "total": 5637 },
+        { "county": "SAMPSON", "inPersonEarly": 4229, "civilianMail": 20, "militaryMail": 1, "overseasMail": 1, "total": 4251 },
+        { "county": "SCOTLAND", "inPersonEarly": 2907, "civilianMail": 29, "militaryMail": 0, "overseasMail": 0, "total": 2936 },
+        { "county": "STANLY", "inPersonEarly": 2168, "civilianMail": 52, "militaryMail": 1, "overseasMail": 1, "total": 2222 },
+        { "county": "STOKES", "inPersonEarly": 3392, "civilianMail": 46, "militaryMail": 1, "overseasMail": 3, "total": 3442 },
+        { "county": "SURRY", "inPersonEarly": 8821, "civilianMail": 161, "militaryMail": 2, "overseasMail": 2, "total": 8986 },
+        { "county": "SWAIN", "inPersonEarly": 1254, "civilianMail": 18, "militaryMail": 1, "overseasMail": 1, "total": 1274 },
+        { "county": "TRANSYLVANIA", "inPersonEarly": 3723, "civilianMail": 60, "militaryMail": 0, "overseasMail": 5, "total": 3788 },
+        { "county": "TYRRELL", "inPersonEarly": 313, "civilianMail": 0, "militaryMail": 0, "overseasMail": 0, "total": 313 },
+        { "county": "UNION", "inPersonEarly": 12859, "civilianMail": 146, "militaryMail": 4, "overseasMail": 11, "total": 13020 },
+        { "county": "VANCE", "inPersonEarly": 3387, "civilianMail": 47, "militaryMail": 0, "overseasMail": 0, "total": 3434 },
+        { "county": "WAKE", "inPersonEarly": 68047, "civilianMail": 1983, "militaryMail": 25, "overseasMail": 257, "total": 70312 },
+        { "county": "WARREN", "inPersonEarly": 1914, "civilianMail": 10, "militaryMail": 0, "overseasMail": 0, "total": 1924 },
+        { "county": "WASHINGTON", "inPersonEarly": 1148, "civilianMail": 4, "militaryMail": 0, "overseasMail": 0, "total": 1152 },
+        { "county": "WATAUGA", "inPersonEarly": 3663, "civilianMail": 76, "militaryMail": 1, "overseasMail": 14, "total": 3754 },
+        { "county": "WAYNE", "inPersonEarly": 9067, "civilianMail": 54, "militaryMail": 13, "overseasMail": 2, "total": 9136 },
+        { "county": "WILKES", "inPersonEarly": 3567, "civilianMail": 93, "militaryMail": 0, "overseasMail": 0, "total": 3660 },
+        { "county": "WILSON", "inPersonEarly": 4493, "civilianMail": 68, "militaryMail": 0, "overseasMail": 0, "total": 4561 },
+        { "county": "YADKIN", "inPersonEarly": 2875, "civilianMail": 31, "militaryMail": 2, "overseasMail": 3, "total": 2911 },
+        { "county": "YANCEY", "inPersonEarly": 1759, "civilianMail": 19, "militaryMail": 0, "overseasMail": 2, "total": 1780 }
+      ],
+      "totalsCheck": {
+        "statewideTotalsFromCountyTable": {
+          "inPersonEarly": 701120,
+          "civilianMail": 11751,
+          "militaryMail": 196,
+          "overseasMail": 1180,
+          "total": 714247
+        },
+        "matchesStatewide": true
+      }
+    },
+  
+    "nc119": {
+      "districtLabel": "NC House District 119",
+      "counties": ["JACKSON", "SWAIN", "TRANSYLVANIA"],
+      "rollup": {
+        "inPersonEarly": 8709,
+        "civilianMail": 165,
+        "militaryMail": 2,
+        "overseasMail": 8,
+        "total": 8884
+      },
+      "countyRows": [
+        { "county": "JACKSON", "inPersonEarly": 3732, "civilianMail": 87, "militaryMail": 1, "overseasMail": 2, "total": 3822 },
+        { "county": "SWAIN", "inPersonEarly": 1254, "civilianMail": 18, "militaryMail": 1, "overseasMail": 1, "total": 1274 },
+        { "county": "TRANSYLVANIA", "inPersonEarly": 3723, "civilianMail": 60, "militaryMail": 0, "overseasMail": 5, "total": 3788 }
+      ]
+    },
+  
+    "electionNightExtension": {
+      "status": "pre-ballot-close-seed",
+      "fieldsToFillTonight": [
+        "meta.lastUpdatedISO",
+        "electionNight.precinctsReportingPct",
+        "electionNight.topRaces",
+        "optional: county-level election day vote totals if you add them"
+      ],
+      "electionNight": {
+        "precinctsReportingPct": null,
+        "topRaces": []
+      }
+    }
+  }
