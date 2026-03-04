@@ -81,8 +81,9 @@ export const validateDashboardData = (value: unknown): ValidationResult => {
     if (!isRecord(statewide.comparison2022)) {
       pushTypeError(errors, 'statewide.comparison2022', 'an object');
     } else {
+      const comparison2022 = statewide.comparison2022;
       ['totalAcceptedBallots', 'earlyVoting', 'mailTotal'].forEach((key) => {
-        if (!isNumber(statewide.comparison2022[key])) {
+        if (!isNumber(comparison2022[key])) {
           pushTypeError(errors, `statewide.comparison2022.${key}`, 'a number');
         }
       });
@@ -218,5 +219,5 @@ export const validateDashboardData = (value: unknown): ValidationResult => {
     return { ok: false, errors };
   }
 
-  return { ok: true, data: value as DashboardData };
+  return { ok: true, data: value as unknown as DashboardData };
 };
