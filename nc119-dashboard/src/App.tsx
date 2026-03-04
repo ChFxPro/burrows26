@@ -3,6 +3,7 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
+  LabelList,
   Legend,
   ResponsiveContainer,
   Tooltip,
@@ -40,9 +41,13 @@ const THEME_STORAGE_KEY = 'nc119-theme';
 
 const chartPalette = {
   brand: '#059669',
+  brandHighlight: '#10b981',
   slate: '#475569',
+  slateHighlight: '#64748b',
   blue: '#0ea5e9',
+  blueHighlight: '#38bdf8',
   violet: '#8b5cf6',
+  violetHighlight: '#a78bfa',
   amber: '#f59e0b',
   red: '#ef4444',
 };
@@ -196,6 +201,12 @@ const App = () => {
     deltaCountLabel,
   } = derived;
 
+  const axisTickColor = theme === 'dark' ? '#cbd5e1' : '#334155';
+  const legendTextColor = theme === 'dark' ? '#e2e8f0' : '#334155';
+  const gridStroke = theme === 'dark' ? '#33415599' : '#94a3b840';
+  const activeStroke = theme === 'dark' ? '#f8fafc' : '#0f172a';
+  const hideTooltipContent = () => null;
+
   return (
     <div className="min-h-screen text-slate-900 transition-colors duration-300 dark:text-slate-100">
       <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/80 backdrop-blur-md transition-colors dark:border-slate-700/80 dark:bg-slate-950/80">
@@ -273,7 +284,7 @@ const App = () => {
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-700 dark:text-brand-200">
                 NC election snapshot
               </p>
-              <h1 className="mt-3 font-display text-4xl font-semibold tracking-tight text-slate-900 dark:text-white sm:text-5xl">
+              <h1 className="mt-3 font-display text-3xl font-semibold tracking-tight text-slate-900 dark:text-white sm:text-4xl lg:text-5xl">
                 {data.meta.title}
               </h1>
               <p className="mt-3 max-w-2xl text-base text-slate-700 dark:text-slate-200">
@@ -346,22 +357,44 @@ const App = () => {
                 subtitle="Statewide early voting and absentee composition"
               />
               <div className="grid gap-4 lg:grid-cols-3">
-                <div className="lg:col-span-2">
+                <div className="min-w-0 lg:col-span-2">
                   <ChartCard
                     title="Accepted Ballots by Method"
                     description="Count by voting method with totals from statewide reporting"
                     ariaLabel="Bar chart of statewide ballots by voting method"
                   >
                     <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={statewideMethodPct} margin={{ top: 16, right: 16, left: 8, bottom: 30 }}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#94a3b840" />
-                        <XAxis dataKey="method" angle={-18} textAnchor="end" interval={0} height={64} />
-                        <YAxis />
-                        <Tooltip
-                          formatter={(value: number | string) => formatNumber(Number(value))}
-                          contentStyle={{ borderRadius: '0.75rem', border: '1px solid #cbd5e1' }}
+                      <BarChart data={statewideMethodPct} margin={{ top: 14, right: 16, left: 8, bottom: 36 }}>
+                        <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
+                        <XAxis
+                          dataKey="method"
+                          angle={-16}
+                          textAnchor="end"
+                          interval={0}
+                          height={70}
+                          tick={{ fill: axisTickColor, fontSize: 12 }}
                         />
-                        <Bar dataKey="count" fill={chartPalette.brand} radius={[8, 8, 0, 0]} />
+                        <YAxis tick={{ fill: axisTickColor, fontSize: 12 }} width={68} />
+                        <Tooltip cursor={false} content={hideTooltipContent} />
+                        <Bar
+                          dataKey="count"
+                          fill={chartPalette.brand}
+                          radius={[8, 8, 0, 0]}
+                          activeBar={{
+                            fill: chartPalette.brandHighlight,
+                            fillOpacity: 0.95,
+                            stroke: activeStroke,
+                            strokeWidth: 1,
+                          }}
+                        >
+                          <LabelList
+                            dataKey="count"
+                            position="top"
+                            fill={axisTickColor}
+                            fontSize={11}
+                            formatter={(value: number | string) => formatNumber(Number(value))}
+                          />
+                        </Bar>
                       </BarChart>
                     </ResponsiveContainer>
                   </ChartCard>
@@ -418,16 +451,35 @@ const App = () => {
                 >
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={partyComparisonRows} margin={{ top: 16, right: 16, left: 8, bottom: 20 }}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#94a3b840" />
-                      <XAxis dataKey="party" />
-                      <YAxis unit="%" />
-                      <Tooltip
-                        formatter={(value: number | string) => formatPercent(Number(value))}
-                        contentStyle={{ borderRadius: '0.75rem', border: '1px solid #cbd5e1' }}
+                      <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
+                      <XAxis dataKey="party" tick={{ fill: axisTickColor, fontSize: 12 }} />
+                      <YAxis unit="%" tick={{ fill: axisTickColor, fontSize: 12 }} />
+                      <Tooltip cursor={false} content={hideTooltipContent} />
+                      <Legend verticalAlign="top" height={28} wrapperStyle={{ color: legendTextColor, fontSize: '12px' }} />
+                      <Bar
+                        dataKey="registrationPct"
+                        name="Registration %"
+                        fill={chartPalette.slate}
+                        radius={[6, 6, 0, 0]}
+                        activeBar={{
+                          fill: chartPalette.slateHighlight,
+                          fillOpacity: 0.95,
+                          stroke: activeStroke,
+                          strokeWidth: 1,
+                        }}
                       />
-                      <Legend />
-                      <Bar dataKey="registrationPct" name="Registration %" fill={chartPalette.slate} radius={[6, 6, 0, 0]} />
-                      <Bar dataKey="ballotSharePct" name="Ballot Share %" fill={chartPalette.brand} radius={[6, 6, 0, 0]} />
+                      <Bar
+                        dataKey="ballotSharePct"
+                        name="Ballot Share %"
+                        fill={chartPalette.brand}
+                        radius={[6, 6, 0, 0]}
+                        activeBar={{
+                          fill: chartPalette.brandHighlight,
+                          fillOpacity: 0.95,
+                          stroke: activeStroke,
+                          strokeWidth: 1,
+                        }}
+                      />
                     </BarChart>
                   </ResponsiveContainer>
                 </ChartCard>
@@ -439,14 +491,29 @@ const App = () => {
                 >
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={data.party.ballotsCast} margin={{ top: 16, right: 16, left: 8, bottom: 20 }}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#94a3b840" />
-                      <XAxis dataKey="party" />
-                      <YAxis unit="%" />
-                      <Tooltip
-                        formatter={(value: number | string) => formatPercent(Number(value))}
-                        contentStyle={{ borderRadius: '0.75rem', border: '1px solid #cbd5e1' }}
-                      />
-                      <Bar dataKey="turnoutPct" fill={chartPalette.blue} radius={[6, 6, 0, 0]} />
+                      <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
+                      <XAxis dataKey="party" tick={{ fill: axisTickColor, fontSize: 12 }} />
+                      <YAxis unit="%" tick={{ fill: axisTickColor, fontSize: 12 }} />
+                      <Tooltip cursor={false} content={hideTooltipContent} />
+                      <Bar
+                        dataKey="turnoutPct"
+                        fill={chartPalette.blue}
+                        radius={[6, 6, 0, 0]}
+                        activeBar={{
+                          fill: chartPalette.blueHighlight,
+                          fillOpacity: 0.95,
+                          stroke: activeStroke,
+                          strokeWidth: 1,
+                        }}
+                      >
+                        <LabelList
+                          dataKey="turnoutPct"
+                          position="top"
+                          fill={axisTickColor}
+                          fontSize={11}
+                          formatter={(value: number | string) => formatPercent(Number(value), 1)}
+                        />
+                      </Bar>
                     </BarChart>
                   </ResponsiveContainer>
                 </ChartCard>
@@ -534,14 +601,29 @@ const App = () => {
                 >
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={countyTotals} margin={{ top: 16, right: 16, left: 8, bottom: 20 }}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#94a3b840" />
-                      <XAxis dataKey="county" />
-                      <YAxis />
-                      <Tooltip
-                        formatter={(value: number | string) => formatNumber(Number(value))}
-                        contentStyle={{ borderRadius: '0.75rem', border: '1px solid #cbd5e1' }}
-                      />
-                      <Bar dataKey="total" fill={chartPalette.violet} radius={[6, 6, 0, 0]} />
+                      <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
+                      <XAxis dataKey="county" tick={{ fill: axisTickColor, fontSize: 12 }} />
+                      <YAxis tick={{ fill: axisTickColor, fontSize: 12 }} width={60} />
+                      <Tooltip cursor={false} content={hideTooltipContent} />
+                      <Bar
+                        dataKey="total"
+                        fill={chartPalette.violet}
+                        radius={[6, 6, 0, 0]}
+                        activeBar={{
+                          fill: chartPalette.violetHighlight,
+                          fillOpacity: 0.95,
+                          stroke: activeStroke,
+                          strokeWidth: 1,
+                        }}
+                      >
+                        <LabelList
+                          dataKey="total"
+                          position="top"
+                          fill={axisTickColor}
+                          fontSize={11}
+                          formatter={(value: number | string) => formatNumber(Number(value))}
+                        />
+                      </Bar>
                     </BarChart>
                   </ResponsiveContainer>
                 </ChartCard>
@@ -553,18 +635,57 @@ const App = () => {
                 >
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={countyMethodBreakdown} margin={{ top: 16, right: 16, left: 8, bottom: 20 }}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#94a3b840" />
-                      <XAxis dataKey="county" />
-                      <YAxis />
-                      <Tooltip
-                        formatter={(value: number | string) => formatNumber(Number(value))}
-                        contentStyle={{ borderRadius: '0.75rem', border: '1px solid #cbd5e1' }}
+                      <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
+                      <XAxis dataKey="county" tick={{ fill: axisTickColor, fontSize: 12 }} />
+                      <YAxis tick={{ fill: axisTickColor, fontSize: 12 }} width={60} />
+                      <Tooltip cursor={false} content={hideTooltipContent} />
+                      <Legend verticalAlign="top" height={28} wrapperStyle={{ color: legendTextColor, fontSize: '12px' }} />
+                      <Bar
+                        dataKey="inPersonEarly"
+                        name="In-Person"
+                        stackId="methods"
+                        fill={chartPalette.brand}
+                        activeBar={{
+                          fill: chartPalette.brandHighlight,
+                          fillOpacity: 0.95,
+                          stroke: activeStroke,
+                          strokeWidth: 1,
+                        }}
                       />
-                      <Legend />
-                      <Bar dataKey="inPersonEarly" stackId="methods" fill={chartPalette.brand} />
-                      <Bar dataKey="civilianMail" stackId="methods" fill={chartPalette.blue} />
-                      <Bar dataKey="militaryMail" stackId="methods" fill={chartPalette.amber} />
-                      <Bar dataKey="overseasMail" stackId="methods" fill={chartPalette.red} />
+                      <Bar
+                        dataKey="civilianMail"
+                        name="Civilian"
+                        stackId="methods"
+                        fill={chartPalette.blue}
+                        activeBar={{
+                          fill: chartPalette.blueHighlight,
+                          fillOpacity: 0.95,
+                          stroke: activeStroke,
+                          strokeWidth: 1,
+                        }}
+                      />
+                      <Bar
+                        dataKey="militaryMail"
+                        name="Military"
+                        stackId="methods"
+                        fill={chartPalette.amber}
+                        activeBar={{
+                          fillOpacity: 0.95,
+                          stroke: activeStroke,
+                          strokeWidth: 1,
+                        }}
+                      />
+                      <Bar
+                        dataKey="overseasMail"
+                        name="Overseas"
+                        stackId="methods"
+                        fill={chartPalette.red}
+                        activeBar={{
+                          fillOpacity: 0.95,
+                          stroke: activeStroke,
+                          strokeWidth: 1,
+                        }}
+                      />
                     </BarChart>
                   </ResponsiveContainer>
                 </ChartCard>

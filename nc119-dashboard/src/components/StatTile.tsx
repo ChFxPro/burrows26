@@ -17,7 +17,9 @@ export const StatTile = ({ label, value, note, accent = false }: StatTileProps) 
       }`}
     >
       <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{label}</p>
-      <p className="mt-2 text-3xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">{value}</p>
+      <p className="mt-2 text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100 sm:text-3xl">
+        {value}
+      </p>
       {note ? <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">{note}</p> : null}
     </Card>
   );

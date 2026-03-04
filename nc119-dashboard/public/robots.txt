@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://chfxpro.github.io/burrows26/sitemap.xml
