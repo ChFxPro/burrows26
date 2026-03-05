@@ -1,0 +1,813 @@
+{
+  "meta": {
+    "datasetId": "nc119_voter_election_result_analysis_v1",
+    "sourceFile": "NC119 Voter and Election Result Analysis.xlsx",
+    "ingestedOn": "2026-03-05",
+    "counties": [
+      "Jackson",
+      "Swain",
+      "Transylvania"
+    ],
+    "notes": "Extracted from campaign-provided spreadsheet; values are as provided in workbook sheets."
+  },
+  "registration": {
+    "byParty": {
+      "2026": {
+        "recordDate": "2026-01-24",
+        "byCounty": [
+          {
+            "county": "Jackson",
+            "Democratic": 7729,
+            "Republican": 8798,
+            "Unaffiliated": 13797,
+            "Libertarian": 220,
+            "Constitution": 0,
+            "Green": 24,
+            "Justice for All": 0,
+            "No Labels": 0,
+            "We the People": 0,
+            "Total": 30568
+          },
+          {
+            "county": "Swain",
+            "Democratic": 2474,
+            "Republican": 3316,
+            "Unaffiliated": 4078,
+            "Libertarian": 72,
+            "Constitution": 0,
+            "Green": 11,
+            "Justice for All": 0,
+            "No Labels": 0,
+            "We the People": 0,
+            "Total": 9951
+          },
+          {
+            "county": "Transylvania",
+            "Democratic": 5385,
+            "Republican": 8659,
+            "Unaffiliated": 12391,
+            "Libertarian": 152,
+            "Constitution": 0,
+            "Green": 8,
+            "Justice for All": 0,
+            "No Labels": 0,
+            "We the People": 0,
+            "Total": 26595
+          }
+        ],
+        "totals": {
+          "Democratic": 15588,
+          "Republican": 20773,
+          "Unaffiliated": 30266,
+          "Libertarian": 444,
+          "Constitution": 0,
+          "Green": 43,
+          "Justice for All": 0,
+          "No Labels": 0,
+          "We the People": 0,
+          "Total": 67114
+        },
+        "percentOfTotal": {
+          "Democratic": 0.23226152516613524,
+          "Republican": 0.30951813332538664,
+          "Unaffiliated": 0.4509640313496439,
+          "Libertarian": 0.006615609261852967,
+          "Constitution": 0.0,
+          "Green": 0.0006407008969812558,
+          "Justice for All": 0.0,
+          "No Labels": 0.0,
+          "We the People": 0.0,
+          "Total": 1.0
+        }
+      },
+      "2024": {
+        "recordDate": "2024-01-27",
+        "byCounty": [
+          {
+            "county": "Jackson",
+            "Democratic": 8449,
+            "Republican": 9073,
+            "Unaffiliated": 13969,
+            "Libertarian": 238,
+            "Constitution": 5,
+            "Green": 26,
+            "Justice for All": 2,
+            "No Labels": 55,
+            "We the People": 7,
+            "Total": 31824
+          },
+          {
+            "county": "Swain",
+            "Democratic": 2747,
+            "Republican": 3381,
+            "Unaffiliated": 4147,
+            "Libertarian": 75,
+            "Constitution": 2,
+            "Green": 11,
+            "Justice for All": 3,
+            "No Labels": 27,
+            "We the People": 4,
+            "Total": 10397
+          },
+          {
+            "county": "Transylvania",
+            "Democratic": 5716,
+            "Republican": 8865,
+            "Unaffiliated": 12539,
+            "Libertarian": 151,
+            "Constitution": 3,
+            "Green": 4,
+            "Justice for All": 2,
+            "No Labels": 39,
+            "We the People": 7,
+            "Total": 27326
+          }
+        ],
+        "totals": {
+          "Democratic": 16912,
+          "Republican": 21319,
+          "Unaffiliated": 30655,
+          "Libertarian": 464,
+          "Constitution": 10,
+          "Green": 41,
+          "Justice for All": 7,
+          "No Labels": 121,
+          "We the People": 18,
+          "Total": 69547
+        },
+        "percentOfTotal": {
+          "Democratic": 0.2431736811077401,
+          "Republican": 0.3065409003982918,
+          "Unaffiliated": 0.4407810545386573,
+          "Libertarian": 0.006671747163788517,
+          "Constitution": 0.0001437876543919939,
+          "Green": 0.000589529383007175,
+          "Justice for All": 0.00010065135807439573,
+          "No Labels": 0.0017398306181431262,
+          "We the People": 0.000258817777905589,
+          "Total": 1.0
+        }
+      }
+    },
+    "byEthnicity": {
+      "2026": {
+        "recordDate": "2026-01-24",
+        "byCounty": [
+          {
+            "county": "Jackson",
+            "White": 24315,
+            "Black": 577,
+            "American Indian/ Alaska Native": 1526,
+            "Asian": 240,
+            "Native Hawaiian/ Pacific Islander": 9,
+            "Multi-racial": 179,
+            "Other": 766,
+            "Undesig-nated": 2956,
+            "Hispanic": 909,
+            "Male": 12996,
+            "Female": 14621
+          },
+          {
+            "county": "Swain",
+            "White": 7426,
+            "Black": 95,
+            "American Indian/ Alaska Native": 1600,
+            "Asian": 39,
+            "Native Hawaiian/ Pacific Islander": 1,
+            "Multi-racial": 36,
+            "Other": 171,
+            "Undesig-nated": 583,
+            "Hispanic": 117,
+            "Male": 4488,
+            "Female": 4952
+          },
+          {
+            "county": "Transylvania",
+            "White": 23595,
+            "Black": 713,
+            "American Indian/ Alaska Native": 45,
+            "Asian": 102,
+            "Native Hawaiian/ Pacific Islander": 2,
+            "Multi-racial": 72,
+            "Other": 391,
+            "Undesig-nated": 1675,
+            "Hispanic": 312,
+            "Male": 11679,
+            "Female": 13227
+          }
+        ],
+        "totals": {
+          "White": 55336,
+          "Black": 1385,
+          "American Indian/ Alaska Native": 3171,
+          "Asian": 381,
+          "Native Hawaiian/ Pacific Islander": 12,
+          "Multi-racial": 287,
+          "Other": 1328,
+          "Undesig-nated": 5214,
+          "Hispanic": 1338,
+          "Male": 29163,
+          "Female": 32800
+        }
+      }
+    }
+  },
+  "elections": {
+    "primary": {
+      "2026": {
+        "registeredVoters": 67114,
+        "contests": [
+          {
+            "office": "US Senate",
+            "election": "Primary",
+            "year": 2026,
+            "democraticCandidates": [
+              {
+                "name": "Cooper",
+                "votes": {
+                  "Jackson": 3058,
+                  "Transylvania": 3379,
+                  "Swain": 842,
+                  "NC119": 7279
+                }
+              },
+              {
+                "name": "Dues",
+                "votes": {
+                  "Jackson": 163,
+                  "Transylvania": 86,
+                  "Swain": 51,
+                  "NC119": 300
+                }
+              },
+              {
+                "name": "Williams",
+                "votes": {
+                  "Jackson": 90,
+                  "Transylvania": 39,
+                  "Swain": 35,
+                  "NC119": 164
+                }
+              },
+              {
+                "name": "Farrow",
+                "votes": {
+                  "Jackson": 73,
+                  "Transylvania": 32,
+                  "Swain": 18,
+                  "NC119": 123
+                }
+              },
+              {
+                "name": "Quick",
+                "votes": {
+                  "Jackson": 27,
+                  "Transylvania": 21,
+                  "Swain": 17,
+                  "NC119": 65
+                }
+              },
+              {
+                "name": "Colon",
+                "votes": {
+                  "Jackson": 23,
+                  "Transylvania": 20,
+                  "Swain": 17,
+                  "NC119": 60
+                }
+              }
+            ],
+            "republicanCandidates": [
+              {
+                "name": "Whatley",
+                "votes": {
+                  "Jackson": 1694,
+                  "Transylvania": 1836,
+                  "Swain": 719,
+                  "NC119": 4249
+                }
+              },
+              {
+                "name": "Brown",
+                "votes": {
+                  "Jackson": 500,
+                  "Transylvania": 624,
+                  "Swain": 191,
+                  "NC119": 1315
+                }
+              },
+              {
+                "name": "Morrow",
+                "votes": {
+                  "Jackson": 330,
+                  "Transylvania": 258,
+                  "Swain": 107,
+                  "NC119": 695
+                }
+              },
+              {
+                "name": "Johnson",
+                "votes": {
+                  "Jackson": 210,
+                  "Transylvania": 187,
+                  "Swain": 83,
+                  "NC119": 480
+                }
+              },
+              {
+                "name": "Temple",
+                "votes": {
+                  "Jackson": 139,
+                  "Transylvania": 115,
+                  "Swain": 70,
+                  "NC119": 324
+                }
+              },
+              {
+                "name": "Dupre",
+                "votes": {
+                  "Jackson": 131,
+                  "Transylvania": 76,
+                  "Swain": 57,
+                  "NC119": 264
+                }
+              },
+              {
+                "name": "Dansie",
+                "votes": {
+                  "Jackson": 80,
+                  "Transylvania": 62,
+                  "Swain": 34,
+                  "NC119": 176
+                }
+              }
+            ],
+            "totals": {
+              "democratic": {
+                "Jackson": 3434,
+                "Transylvania": 3577,
+                "Swain": 980,
+                "NC119": 7991
+              },
+              "republican": {
+                "Jackson": 3084,
+                "Transylvania": 3158,
+                "Swain": 1261,
+                "NC119": 7503
+              }
+            }
+          },
+          {
+            "office": "NC House District 119",
+            "election": "Primary",
+            "year": 2026,
+            "democraticCandidates": [
+              {
+                "name": "Ager",
+                "votes": {
+                  "Jackson": 1670,
+                  "Transylvania": 2321,
+                  "Swain": 434,
+                  "NC119": 4425
+                }
+              },
+              {
+                "name": "Hudspeth",
+                "votes": {
+                  "Jackson": 785,
+                  "Transylvania": 712,
+                  "Swain": 167,
+                  "NC119": 1664
+                }
+              },
+              {
+                "name": "Briarwood",
+                "votes": {
+                  "Jackson": 619,
+                  "Transylvania": 326,
+                  "Swain": 166,
+                  "NC119": 1111
+                }
+              },
+              {
+                "name": "Maddox",
+                "votes": {
+                  "Jackson": 251,
+                  "Transylvania": 164,
+                  "Swain": 119,
+                  "NC119": 534
+                }
+              },
+              {
+                "name": "Whipple",
+                "votes": {
+                  "Jackson": 71,
+                  "Transylvania": 33,
+                  "Swain": 41,
+                  "NC119": 145
+                }
+              }
+            ],
+            "republicanCandidates": [
+              {
+                "name": "Edwards",
+                "votes": {
+                  "Jackson": 2180,
+                  "Transylvania": 1933,
+                  "Swain": 972,
+                  "NC119": 5085
+                }
+              },
+              {
+                "name": "Smith",
+                "votes": {
+                  "Jackson": 1058,
+                  "Transylvania": 1337,
+                  "Swain": 417,
+                  "NC119": 2812
+                }
+              }
+            ],
+            "totals": {
+              "democratic": {
+                "Jackson": 3396,
+                "Transylvania": 3556,
+                "Swain": 927,
+                "NC119": 7879
+              },
+              "republican": {
+                "Jackson": 3238,
+                "Transylvania": 3270,
+                "Swain": 1389,
+                "NC119": 7897
+              }
+            }
+          }
+        ]
+      },
+      "2024": {
+        "registeredVoters": 69547,
+        "contests": [
+          {
+            "office": "US President",
+            "election": "Primary",
+            "year": 2024,
+            "democraticCandidates": [
+              {
+                "name": "Biden, Jr.",
+                "votes": {
+                  "Jackson": 2581,
+                  "Transylvania": 2417,
+                  "Swain": 529,
+                  "NC119": 5527
+                }
+              },
+              {
+                "name": "No Pref",
+                "votes": {
+                  "Jackson": 626,
+                  "Transylvania": 270,
+                  "Swain": 123,
+                  "NC119": 1019
+                }
+              }
+            ],
+            "republicanCandidates": [
+              {
+                "name": "Trump",
+                "votes": {
+                  "Jackson": 3235,
+                  "Transylvania": 4099,
+                  "Swain": 1222,
+                  "NC119": 8556
+                }
+              },
+              {
+                "name": "Haley",
+                "votes": {
+                  "Jackson": 1091,
+                  "Transylvania": 1889,
+                  "Swain": 274,
+                  "NC119": 3254
+                }
+              },
+              {
+                "name": "DeSantis",
+                "votes": {
+                  "Jackson": 77,
+                  "Transylvania": 70,
+                  "Swain": 20,
+                  "NC119": 167
+                }
+              },
+              {
+                "name": "No Pref",
+                "votes": {
+                  "Jackson": 28,
+                  "Transylvania": 32,
+                  "Swain": 11,
+                  "NC119": 71
+                }
+              },
+              {
+                "name": "Ramaswa",
+                "votes": {
+                  "Jackson": 19,
+                  "Transylvania": 26,
+                  "Swain": 5,
+                  "NC119": 50
+                }
+              },
+              {
+                "name": "Christie",
+                "votes": {
+                  "Jackson": 19,
+                  "Transylvania": 21,
+                  "Swain": 2,
+                  "NC119": 42
+                }
+              },
+              {
+                "name": "Hutchins",
+                "votes": {
+                  "Jackson": 6,
+                  "Transylvania": 7,
+                  "Swain": 1,
+                  "NC119": 14
+                }
+              },
+              {
+                "name": "Binkley",
+                "votes": {
+                  "Jackson": 9,
+                  "Transylvania": 3,
+                  "Swain": 0,
+                  "NC119": 12
+                }
+              }
+            ],
+            "totals": {
+              "democratic": {
+                "Jackson": 3207,
+                "Transylvania": 2687,
+                "Swain": 652,
+                "NC119": 6546
+              },
+              "republican": {
+                "Jackson": 4484,
+                "Transylvania": 6147,
+                "Swain": 1535,
+                "NC119": 12166
+              }
+            }
+          },
+          {
+            "office": "NC Governor",
+            "election": "Primary",
+            "year": 2024,
+            "democraticCandidates": [
+              {
+                "name": "Stein",
+                "votes": {
+                  "Jackson": 2301,
+                  "Transylvania": 2255,
+                  "Swain": 412,
+                  "NC119": 4968
+                }
+              },
+              {
+                "name": "Morgan",
+                "votes": {
+                  "Jackson": 359,
+                  "Transylvania": 188,
+                  "Swain": 101,
+                  "NC119": 648
+                }
+              },
+              {
+                "name": "Booker",
+                "votes": {
+                  "Jackson": 219,
+                  "Transylvania": 94,
+                  "Swain": 47,
+                  "NC119": 360
+                }
+              },
+              {
+                "name": "Foxx",
+                "votes": {
+                  "Jackson": 135,
+                  "Transylvania": 64,
+                  "Swain": 46,
+                  "NC119": 245
+                }
+              },
+              {
+                "name": "Williams",
+                "votes": {
+                  "Jackson": 109,
+                  "Transylvania": 56,
+                  "Swain": 39,
+                  "NC119": 204
+                }
+              }
+            ],
+            "republicanCandidates": [
+              {
+                "name": "Robinson",
+                "votes": {
+                  "Jackson": 2675,
+                  "Transylvania": 3631,
+                  "Swain": 921,
+                  "NC119": 7227
+                }
+              },
+              {
+                "name": "Graham",
+                "votes": {
+                  "Jackson": 575,
+                  "Transylvania": 1145,
+                  "Swain": 327,
+                  "NC119": 2047
+                }
+              },
+              {
+                "name": "Folwell",
+                "votes": {
+                  "Jackson": 245,
+                  "Transylvania": 983,
+                  "Swain": 161,
+                  "NC119": 1389
+                }
+              }
+            ],
+            "totals": {
+              "democratic": {
+                "Jackson": 3123,
+                "Transylvania": 2657,
+                "Swain": 645,
+                "NC119": 6425
+              },
+              "republican": {
+                "Jackson": 3495,
+                "Transylvania": 5759,
+                "Swain": 1409,
+                "NC119": 10663
+              }
+            }
+          }
+        ]
+      }
+    },
+    "general": {
+      "2024": {
+        "registeredVoters": 69547,
+        "contests": [
+          {
+            "office": "US President",
+            "election": "General",
+            "year": 2024,
+            "democraticCandidates": [
+              {
+                "name": "Harris",
+                "votes": {
+                  "Jackson": 9746,
+                  "Transylvania": 8972,
+                  "Swain": 2643,
+                  "NC119": 21361
+                }
+              }
+            ],
+            "republicanCandidates": [
+              {
+                "name": "Trump",
+                "votes": {
+                  "Jackson": 11796,
+                  "Transylvania": 11492,
+                  "Swain": 4311,
+                  "NC119": 27599
+                }
+              }
+            ],
+            "totals": {
+              "democratic": {
+                "Jackson": 9746,
+                "Transylvania": 8972,
+                "Swain": 2643,
+                "NC119": 21361
+              },
+              "republican": {
+                "Jackson": 11796,
+                "Transylvania": 11492,
+                "Swain": 4311,
+                "NC119": 27599
+              }
+            }
+          },
+          {
+            "office": "US House",
+            "election": "General",
+            "year": 2024,
+            "democraticCandidates": [
+              {
+                "name": "Rudow",
+                "votes": {
+                  "Jackson": 9455,
+                  "Transylvania": 8393,
+                  "Swain": 2480,
+                  "NC119": 20328
+                }
+              }
+            ],
+            "republicanCandidates": [
+              {
+                "name": "Edwards",
+                "votes": {
+                  "Jackson": 12166,
+                  "Transylvania": 12177,
+                  "Swain": 4337,
+                  "NC119": 28680
+                }
+              }
+            ],
+            "totals": {
+              "democratic": {
+                "Jackson": 9455,
+                "Transylvania": 8393,
+                "Swain": 2480,
+                "NC119": 20328
+              },
+              "republican": {
+                "Jackson": 12166,
+                "Transylvania": 12177,
+                "Swain": 4337,
+                "NC119": 28680
+              }
+            }
+          },
+          {
+            "office": "NC Senate",
+            "election": "General",
+            "year": 2024,
+            "democraticCandidates": [
+              {
+                "name": "Tebrugge",
+                "votes": {
+                  "Jackson": 9330,
+                  "Transylvania": 8666,
+                  "Swain": 2412,
+                  "NC119": 20408
+                }
+              }
+            ],
+            "republicanCandidates": [
+              {
+                "name": "Corbin",
+                "votes": {
+                  "Jackson": 12014,
+                  "Transylvania": 11608,
+                  "Swain": 4166,
+                  "NC119": 27788
+                }
+              }
+            ],
+            "totals": {
+              "democratic": {
+                "Jackson": 9330,
+                "Transylvania": 8666,
+                "Swain": 2412,
+                "NC119": 20408
+              },
+              "republican": {
+                "Jackson": 12014,
+                "Transylvania": 11608,
+                "Swain": 4166,
+                "NC119": 27788
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "observations": [
+    "Observations:",
+    "1. I was surprised that NC119 lost voters over the past two years.",
+    "2. In total the Ds lost 1%, the Rs no change, the Us gained 1%",
+    "3. It is possible - though not conclusive - the Ds, by percentage, moved to the Us.",
+    "4. Although the D losses were almost tripple the R losses, the percentages of D to R has not changed significantly. It is possible that some Rs moved to Us also.",
+    "Conclusion:",
+    "1. It is still clear to me that the election will be won or lost in the middle.",
+    "2. All messaging must be directed to the middle's concerns.",
+    "3. Ds will vote for Mark with middle messaging",
+    "4. I don't believe that hot button social issues are winners. Many in the middle can lean either way.",
+    "Who in in the middle? On indicator is to know how many Uaffs took Demballots in the primary. When I worked phones and post cards in Sam Edney's past runk I was given those Unaffs who did that. I talked to a number. The party should be able to deliver this information again. It is extremely important targeting information.",
+    "Observations and Conclusions about 2026 Primary vs 2024 General NC 119 Results: (This data can't be a direct comparison between election years and type, but I believesome  conclusions can still be drawn.)",
+    "Observations:",
+    "The closeness of '26 vs '24 at this juncture is obvious. The question is, will it carry over to the General?",
+    "Conclusions:",
+    "1. Mark can win this district, but it will  be a tight race.",
+    "2. All Democrats must turn out.",
+    "3. Messaging must be to the middle to convenice them to vote Democrat."
+  ]
+}

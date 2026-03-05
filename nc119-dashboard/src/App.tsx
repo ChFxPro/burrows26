@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, type MouseEvent } from 'react';
 import {
   Bar,
   BarChart,
@@ -35,6 +35,7 @@ import {
   formatSignedPercent,
   formatSignedPoints,
 } from './lib/format';
+import { Nc119Analysis } from './pages/Nc119Analysis';
 import type { DashboardData } from './types';
 
 const THEME_STORAGE_KEY = 'nc119-theme';
@@ -60,6 +61,41 @@ const navItems = [
 ];
 
 type AppTab = 'overview' | 'admin';
+type AppRoute = 'dashboard' | 'analysis';
+
+const buildAppHref = (path: '/' | '/analysis'): string => {
+  const baseUrl = import.meta.env.BASE_URL;
+  if (path === '/') {
+    return baseUrl;
+  }
+
+  const normalizedBase = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+  return `${normalizedBase}${path}`;
+};
+
+const resolveRouteFromPathname = (pathname: string): AppRoute => {
+  const baseUrl = import.meta.env.BASE_URL;
+  const normalizedBase = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+
+  let normalizedPathname = pathname;
+  if (normalizedBase !== '/' && normalizedPathname.startsWith(normalizedBase)) {
+    normalizedPathname = normalizedPathname.slice(normalizedBase.length) || '/';
+  }
+
+  if (!normalizedPathname.startsWith('/')) {
+    normalizedPathname = `/${normalizedPathname}`;
+  }
+
+  return normalizedPathname.startsWith('/analysis') ? 'analysis' : 'dashboard';
+};
+
+const getInitialRoute = (): AppRoute => {
+  if (typeof window === 'undefined') {
+    return 'dashboard';
+  }
+
+  return resolveRouteFromPathname(window.location.pathname);
+};
 
 type TooltipRow = {
   color?: string;
@@ -170,17 +206,46 @@ const initialValidation = coerceDashboardData(rawDashboardData);
 
 const App = () => {
   const [theme, setTheme] = useState<'light' | 'dark'>(getInitialTheme);
+  const [appRoute, setAppRoute] = useState<AppRoute>(getInitialRoute);
   const [activeTab, setActiveTab] = useState<AppTab>('overview');
   const [data, setData] = useState<DashboardData | null>(initialValidation.ok ? initialValidation.data : null);
   const [errors, setErrors] = useState<string[]>(initialValidation.ok ? [] : initialValidation.errors);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
 
+  const dashboardHref = buildAppHref('/');
+  const analysisHref = buildAppHref('/analysis');
+
   useEffect(() => {
     const root = document.documentElement;
     root.classList.toggle('dark', theme === 'dark');
     window.localStorage.setItem(THEME_STORAGE_KEY, theme);
   }, [theme]);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setAppRoute(resolveRouteFromPathname(window.location.pathname));
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const handleRouteNavigation =
+    (route: AppRoute, href: string) => (event: MouseEvent<HTMLAnchorElement>) => {
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) {
+        return;
+      }
+
+      event.preventDefault();
+      if (appRoute === route && window.location.pathname === href) {
+        return;
+      }
+
+      window.history.pushState({}, '', href);
+      setAppRoute(route);
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    };
 
   const updateData = (next: DashboardData) => {
     setData(next);
@@ -258,6 +323,46 @@ const App = () => {
     };
   }, [data]);
 
+  if (appRoute === 'analysis') {
+    return (
+      <div className="min-h-screen text-slate-900 transition-colors duration-300 dark:text-slate-100">
+        <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/80 backdrop-blur-md transition-colors dark:border-slate-700/80 dark:bg-slate-950/80">
+          <div className="mx-auto flex w-full max-w-dashboard flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="inline-flex shrink-0 items-center rounded-lg bg-slate-900 px-2 py-1 shadow-sm ring-1 ring-slate-700 dark:bg-slate-950">
+                <img src={logoWhite} alt="NC119 Dashboard" className="h-8 w-auto sm:h-9" />
+              </div>
+              <nav aria-label="Page navigation" className="inline-flex rounded-lg border border-slate-300 bg-white p-1 dark:border-slate-600 dark:bg-slate-900">
+                <a
+                  href={dashboardHref}
+                  onClick={handleRouteNavigation('dashboard', dashboardHref)}
+                  className="rounded-md px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-brand-50 hover:text-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 dark:text-slate-200 dark:hover:bg-brand-700/20 dark:hover:text-brand-100"
+                >
+                  Dashboard
+                </a>
+                <a
+                  href={analysisHref}
+                  onClick={handleRouteNavigation('analysis', analysisHref)}
+                  className="rounded-md bg-brand-600 px-3 py-1.5 text-sm font-medium text-white transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+                  aria-current="page"
+                >
+                  NC119 Analysis
+                </a>
+              </nav>
+            </div>
+            <ThemeToggle
+              theme={theme}
+              onToggle={() => setTheme((current) => (current === 'light' ? 'dark' : 'light'))}
+            />
+          </div>
+        </header>
+        <main className="mx-auto w-full max-w-dashboard space-y-10 px-4 py-8 sm:px-6 lg:px-8">
+          <Nc119Analysis theme={theme} />
+        </main>
+      </div>
+    );
+  }
+
   if (!data || !derived) {
     return (
       <main className="mx-auto min-h-screen w-full max-w-dashboard px-4 py-10 sm:px-6 lg:px-8">
@@ -306,6 +411,27 @@ const App = () => {
             <div className="inline-flex shrink-0 items-center rounded-lg bg-slate-900 px-2 py-1 shadow-sm ring-1 ring-slate-700 dark:bg-slate-950">
               <img src={logoWhite} alt="NC119 Dashboard" className="h-8 w-auto sm:h-9" />
             </div>
+
+            <nav
+              aria-label="Page navigation"
+              className="inline-flex rounded-lg border border-slate-300 bg-white p-1 dark:border-slate-600 dark:bg-slate-900"
+            >
+              <a
+                href={dashboardHref}
+                onClick={handleRouteNavigation('dashboard', dashboardHref)}
+                className="rounded-md bg-brand-600 px-3 py-1.5 text-sm font-medium text-white transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+                aria-current="page"
+              >
+                Dashboard
+              </a>
+              <a
+                href={analysisHref}
+                onClick={handleRouteNavigation('analysis', analysisHref)}
+                className="rounded-md px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-brand-50 hover:text-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 dark:text-slate-200 dark:hover:bg-brand-700/20 dark:hover:text-brand-100"
+              >
+                NC119 Analysis
+              </a>
+            </nav>
 
             <div
               role="tablist"
