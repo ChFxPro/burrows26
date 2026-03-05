@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState, type MouseEvent } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import {
   Bar,
   BarChart,
@@ -55,56 +56,14 @@ const chartPalette = {
 };
 
 const navItems = [
-  { href: '#overview', label: 'Overview' },
-  { href: '#methods', label: 'Methods' },
-  { href: '#party', label: 'Party' },
-  { href: '#nc119', label: 'NC119' },
+  { sectionId: 'overview', label: 'Overview' },
+  { sectionId: 'methods', label: 'Methods' },
+  { sectionId: 'party', label: 'Party' },
+  { sectionId: 'nc119', label: 'NC119' },
 ];
 
 type AppTab = 'overview' | 'admin';
 type AppRoute = 'dashboard' | 'analysis' | 'winPath';
-
-const buildAppHref = (path: '/' | '/analysis' | '/win-path'): string => {
-  const baseUrl = import.meta.env.BASE_URL;
-  if (path === '/') {
-    return baseUrl;
-  }
-
-  const normalizedBase = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
-  return `${normalizedBase}${path}`;
-};
-
-const resolveRouteFromPathname = (pathname: string): AppRoute => {
-  const baseUrl = import.meta.env.BASE_URL;
-  const normalizedBase = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
-
-  let normalizedPathname = pathname;
-  if (normalizedBase !== '/' && normalizedPathname.startsWith(normalizedBase)) {
-    normalizedPathname = normalizedPathname.slice(normalizedBase.length) || '/';
-  }
-
-  if (!normalizedPathname.startsWith('/')) {
-    normalizedPathname = `/${normalizedPathname}`;
-  }
-
-  if (normalizedPathname.startsWith('/analysis')) {
-    return 'analysis';
-  }
-
-  if (normalizedPathname.startsWith('/win-path')) {
-    return 'winPath';
-  }
-
-  return 'dashboard';
-};
-
-const getInitialRoute = (): AppRoute => {
-  if (typeof window === 'undefined') {
-    return 'dashboard';
-  }
-
-  return resolveRouteFromPathname(window.location.pathname);
-};
 
 type TooltipRow = {
   color?: string;
@@ -214,17 +173,32 @@ const getInitialTheme = (): 'light' | 'dark' => {
 const initialValidation = coerceDashboardData(rawDashboardData);
 
 const App = () => {
+  const location = useLocation();
   const [theme, setTheme] = useState<'light' | 'dark'>(getInitialTheme);
-  const [appRoute, setAppRoute] = useState<AppRoute>(getInitialRoute);
   const [activeTab, setActiveTab] = useState<AppTab>('overview');
   const [data, setData] = useState<DashboardData | null>(initialValidation.ok ? initialValidation.data : null);
   const [errors, setErrors] = useState<string[]>(initialValidation.ok ? [] : initialValidation.errors);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
 
-  const dashboardHref = buildAppHref('/');
-  const analysisHref = buildAppHref('/analysis');
-  const winPathHref = buildAppHref('/win-path');
+  const appRoute: AppRoute = useMemo(() => {
+    if (location.pathname.startsWith('/analysis')) {
+      return 'analysis';
+    }
+
+    if (location.pathname.startsWith('/win-path')) {
+      return 'winPath';
+    }
+
+    return 'dashboard';
+  }, [location.pathname]);
+
+  const pageNavLinkClass = ({ isActive }: { isActive: boolean }) =>
+    `rounded-md px-3 py-1.5 text-sm font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 ${
+      isActive
+        ? 'bg-brand-600 text-white'
+        : 'text-slate-700 hover:bg-brand-50 hover:text-brand-700 dark:text-slate-200 dark:hover:bg-brand-700/20 dark:hover:text-brand-100'
+    }`;
 
   useEffect(() => {
     const root = document.documentElement;
@@ -232,30 +206,9 @@ const App = () => {
     window.localStorage.setItem(THEME_STORAGE_KEY, theme);
   }, [theme]);
 
-  useEffect(() => {
-    const handlePopState = () => {
-      setAppRoute(resolveRouteFromPathname(window.location.pathname));
-    };
-
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
-
-  const handleRouteNavigation =
-    (route: AppRoute, href: string) => (event: MouseEvent<HTMLAnchorElement>) => {
-      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) {
-        return;
-      }
-
-      event.preventDefault();
-      if (appRoute === route && window.location.pathname === href) {
-        return;
-      }
-
-      window.history.pushState({}, '', href);
-      setAppRoute(route);
-      window.scrollTo({ top: 0, behavior: 'auto' });
-    };
+  const scrollToSection = (sectionId: string) => () => {
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   const updateData = (next: DashboardData) => {
     setData(next);
@@ -343,28 +296,15 @@ const App = () => {
                 <img src={logoWhite} alt="NC119 Dashboard" className="h-8 w-auto sm:h-9" />
               </div>
               <nav aria-label="Page navigation" className="inline-flex rounded-lg border border-slate-300 bg-white p-1 dark:border-slate-600 dark:bg-slate-900">
-                <a
-                  href={dashboardHref}
-                  onClick={handleRouteNavigation('dashboard', dashboardHref)}
-                  className="rounded-md px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-brand-50 hover:text-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 dark:text-slate-200 dark:hover:bg-brand-700/20 dark:hover:text-brand-100"
-                >
+                <NavLink to="/" end className={pageNavLinkClass}>
                   Dashboard
-                </a>
-                <a
-                  href={analysisHref}
-                  onClick={handleRouteNavigation('analysis', analysisHref)}
-                  className="rounded-md bg-brand-600 px-3 py-1.5 text-sm font-medium text-white transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
-                  aria-current="page"
-                >
+                </NavLink>
+                <NavLink to="/analysis" className={pageNavLinkClass}>
                   NC119 Analysis
-                </a>
-                <a
-                  href={winPathHref}
-                  onClick={handleRouteNavigation('winPath', winPathHref)}
-                  className="rounded-md px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-brand-50 hover:text-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 dark:text-slate-200 dark:hover:bg-brand-700/20 dark:hover:text-brand-100"
-                >
+                </NavLink>
+                <NavLink to="/win-path" className={pageNavLinkClass}>
                   Win Path
-                </a>
+                </NavLink>
               </nav>
             </div>
             <ThemeToggle
@@ -390,28 +330,15 @@ const App = () => {
                 <img src={logoWhite} alt="NC119 Dashboard" className="h-8 w-auto sm:h-9" />
               </div>
               <nav aria-label="Page navigation" className="inline-flex rounded-lg border border-slate-300 bg-white p-1 dark:border-slate-600 dark:bg-slate-900">
-                <a
-                  href={dashboardHref}
-                  onClick={handleRouteNavigation('dashboard', dashboardHref)}
-                  className="rounded-md px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-brand-50 hover:text-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 dark:text-slate-200 dark:hover:bg-brand-700/20 dark:hover:text-brand-100"
-                >
+                <NavLink to="/" end className={pageNavLinkClass}>
                   Dashboard
-                </a>
-                <a
-                  href={analysisHref}
-                  onClick={handleRouteNavigation('analysis', analysisHref)}
-                  className="rounded-md px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-brand-50 hover:text-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 dark:text-slate-200 dark:hover:bg-brand-700/20 dark:hover:text-brand-100"
-                >
+                </NavLink>
+                <NavLink to="/analysis" className={pageNavLinkClass}>
                   NC119 Analysis
-                </a>
-                <a
-                  href={winPathHref}
-                  onClick={handleRouteNavigation('winPath', winPathHref)}
-                  className="rounded-md bg-brand-600 px-3 py-1.5 text-sm font-medium text-white transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
-                  aria-current="page"
-                >
+                </NavLink>
+                <NavLink to="/win-path" className={pageNavLinkClass}>
                   Win Path
-                </a>
+                </NavLink>
               </nav>
             </div>
             <ThemeToggle
@@ -480,28 +407,15 @@ const App = () => {
               aria-label="Page navigation"
               className="inline-flex rounded-lg border border-slate-300 bg-white p-1 dark:border-slate-600 dark:bg-slate-900"
             >
-              <a
-                href={dashboardHref}
-                onClick={handleRouteNavigation('dashboard', dashboardHref)}
-                className="rounded-md bg-brand-600 px-3 py-1.5 text-sm font-medium text-white transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
-                aria-current="page"
-              >
+              <NavLink to="/" end className={pageNavLinkClass}>
                 Dashboard
-              </a>
-              <a
-                href={analysisHref}
-                onClick={handleRouteNavigation('analysis', analysisHref)}
-                className="rounded-md px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-brand-50 hover:text-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 dark:text-slate-200 dark:hover:bg-brand-700/20 dark:hover:text-brand-100"
-              >
+              </NavLink>
+              <NavLink to="/analysis" className={pageNavLinkClass}>
                 NC119 Analysis
-              </a>
-              <a
-                href={winPathHref}
-                onClick={handleRouteNavigation('winPath', winPathHref)}
-                className="rounded-md px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-brand-50 hover:text-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 dark:text-slate-200 dark:hover:bg-brand-700/20 dark:hover:text-brand-100"
-              >
+              </NavLink>
+              <NavLink to="/win-path" className={pageNavLinkClass}>
                 Win Path
-              </a>
+              </NavLink>
             </nav>
 
             <div
@@ -540,13 +454,14 @@ const App = () => {
             {activeTab === 'overview' ? (
               <nav aria-label="Section navigation" className="flex flex-wrap gap-2">
                 {navItems.map((item) => (
-                  <a
-                    key={item.href}
-                    href={item.href}
+                  <button
+                    key={item.sectionId}
+                    type="button"
+                    onClick={scrollToSection(item.sectionId)}
                     className="rounded-md px-2 py-1 text-sm font-medium text-slate-700 transition hover:bg-brand-50 hover:text-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 dark:text-slate-200 dark:hover:bg-brand-700/20 dark:hover:text-brand-100"
                   >
                     {item.label}
-                  </a>
+                  </button>
                 ))}
               </nav>
             ) : null}

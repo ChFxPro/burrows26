@@ -190,7 +190,7 @@ export const Nc119Analysis = ({ theme }: Nc119AnalysisProps) => {
       createdDescriptionMeta = true;
     }
 
-    const jsonLdUrl = new URL(window.location.pathname, window.location.origin).toString();
+    const jsonLdUrl = window.location.href;
     const existingJsonLd = document.getElementById(JSON_LD_ID);
     if (existingJsonLd) {
       existingJsonLd.remove();

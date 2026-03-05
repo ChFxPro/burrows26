@@ -259,7 +259,7 @@ export const WinPath = () => {
       createdDescriptionMeta = true;
     }
 
-    const winPathUrl = new URL(window.location.pathname, window.location.origin).toString();
+    const winPathUrl = window.location.href;
     const existingJsonLd = document.getElementById(WIN_PATH_JSON_LD_ID);
     if (existingJsonLd) {
       existingJsonLd.remove();
