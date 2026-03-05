@@ -36,6 +36,7 @@ import {
   formatSignedPoints,
 } from './lib/format';
 import { Nc119Analysis } from './pages/Nc119Analysis';
+import { WinPath } from './pages/WinPath';
 import type { DashboardData } from './types';
 
 const THEME_STORAGE_KEY = 'nc119-theme';
@@ -61,9 +62,9 @@ const navItems = [
 ];
 
 type AppTab = 'overview' | 'admin';
-type AppRoute = 'dashboard' | 'analysis';
+type AppRoute = 'dashboard' | 'analysis' | 'winPath';
 
-const buildAppHref = (path: '/' | '/analysis'): string => {
+const buildAppHref = (path: '/' | '/analysis' | '/win-path'): string => {
   const baseUrl = import.meta.env.BASE_URL;
   if (path === '/') {
     return baseUrl;
@@ -86,7 +87,15 @@ const resolveRouteFromPathname = (pathname: string): AppRoute => {
     normalizedPathname = `/${normalizedPathname}`;
   }
 
-  return normalizedPathname.startsWith('/analysis') ? 'analysis' : 'dashboard';
+  if (normalizedPathname.startsWith('/analysis')) {
+    return 'analysis';
+  }
+
+  if (normalizedPathname.startsWith('/win-path')) {
+    return 'winPath';
+  }
+
+  return 'dashboard';
 };
 
 const getInitialRoute = (): AppRoute => {
@@ -215,6 +224,7 @@ const App = () => {
 
   const dashboardHref = buildAppHref('/');
   const analysisHref = buildAppHref('/analysis');
+  const winPathHref = buildAppHref('/win-path');
 
   useEffect(() => {
     const root = document.documentElement;
@@ -348,6 +358,13 @@ const App = () => {
                 >
                   NC119 Analysis
                 </a>
+                <a
+                  href={winPathHref}
+                  onClick={handleRouteNavigation('winPath', winPathHref)}
+                  className="rounded-md px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-brand-50 hover:text-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 dark:text-slate-200 dark:hover:bg-brand-700/20 dark:hover:text-brand-100"
+                >
+                  Win Path
+                </a>
               </nav>
             </div>
             <ThemeToggle
@@ -358,6 +375,53 @@ const App = () => {
         </header>
         <main className="mx-auto w-full max-w-dashboard space-y-10 px-4 py-8 sm:px-6 lg:px-8">
           <Nc119Analysis theme={theme} />
+        </main>
+      </div>
+    );
+  }
+
+  if (appRoute === 'winPath') {
+    return (
+      <div className="min-h-screen text-slate-900 transition-colors duration-300 dark:text-slate-100">
+        <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/80 backdrop-blur-md transition-colors dark:border-slate-700/80 dark:bg-slate-950/80">
+          <div className="mx-auto flex w-full max-w-dashboard flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="inline-flex shrink-0 items-center rounded-lg bg-slate-900 px-2 py-1 shadow-sm ring-1 ring-slate-700 dark:bg-slate-950">
+                <img src={logoWhite} alt="NC119 Dashboard" className="h-8 w-auto sm:h-9" />
+              </div>
+              <nav aria-label="Page navigation" className="inline-flex rounded-lg border border-slate-300 bg-white p-1 dark:border-slate-600 dark:bg-slate-900">
+                <a
+                  href={dashboardHref}
+                  onClick={handleRouteNavigation('dashboard', dashboardHref)}
+                  className="rounded-md px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-brand-50 hover:text-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 dark:text-slate-200 dark:hover:bg-brand-700/20 dark:hover:text-brand-100"
+                >
+                  Dashboard
+                </a>
+                <a
+                  href={analysisHref}
+                  onClick={handleRouteNavigation('analysis', analysisHref)}
+                  className="rounded-md px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-brand-50 hover:text-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 dark:text-slate-200 dark:hover:bg-brand-700/20 dark:hover:text-brand-100"
+                >
+                  NC119 Analysis
+                </a>
+                <a
+                  href={winPathHref}
+                  onClick={handleRouteNavigation('winPath', winPathHref)}
+                  className="rounded-md bg-brand-600 px-3 py-1.5 text-sm font-medium text-white transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+                  aria-current="page"
+                >
+                  Win Path
+                </a>
+              </nav>
+            </div>
+            <ThemeToggle
+              theme={theme}
+              onToggle={() => setTheme((current) => (current === 'light' ? 'dark' : 'light'))}
+            />
+          </div>
+        </header>
+        <main className="mx-auto w-full max-w-dashboard space-y-10 px-4 py-8 sm:px-6 lg:px-8">
+          <WinPath />
         </main>
       </div>
     );
@@ -430,6 +494,13 @@ const App = () => {
                 className="rounded-md px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-brand-50 hover:text-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 dark:text-slate-200 dark:hover:bg-brand-700/20 dark:hover:text-brand-100"
               >
                 NC119 Analysis
+              </a>
+              <a
+                href={winPathHref}
+                onClick={handleRouteNavigation('winPath', winPathHref)}
+                className="rounded-md px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-brand-50 hover:text-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 dark:text-slate-200 dark:hover:bg-brand-700/20 dark:hover:text-brand-100"
+              >
+                Win Path
               </a>
             </nav>
 

@@ -1,0 +1,321 @@
+{
+  "meta": {
+    "generatedAtISO": "2026-03-05T16:04:24.048728+00:00",
+    "sourceFiles": {
+      "JACKSON": "ncvoter50.txt",
+      "SWAIN": "ncvoter87.txt",
+      "TRANSYLVANIA": "ncvoter88.txt"
+    },
+    "scope": "NC House District 119 voters from county registration exports (Jackson, Swain, Transylvania). Active voters only by default.",
+    "filters": {
+      "nc_house_abbrv": "119",
+      "status_cd": "A"
+    },
+    "schemaVersion": "v1"
+  },
+  "counts": {
+    "activeVotersHD119": {
+      "districtTotal": 57770,
+      "byCounty": {
+        "JACKSON": 25743,
+        "SWAIN": 8411,
+        "TRANSYLVANIA": 23616
+      },
+      "byParty": {
+        "UNA": 25831,
+        "REP": 18181,
+        "DEM": 13388,
+        "LIB": 330,
+        "GRE": 40
+      },
+      "byCountyParty": {
+        "JACKSON": {
+          "UNA": 11494,
+          "REP": 7526,
+          "DEM": 6548,
+          "LIB": 154,
+          "GRE": 21
+        },
+        "SWAIN": {
+          "UNA": 3429,
+          "REP": 2861,
+          "DEM": 2051,
+          "LIB": 59,
+          "GRE": 11
+        },
+        "TRANSYLVANIA": {
+          "UNA": 10908,
+          "REP": 7794,
+          "DEM": 4789,
+          "LIB": 117,
+          "GRE": 8
+        }
+      }
+    },
+    "ageBands": {
+      "district": {
+        "65-74": 10886,
+        "18-24": 6415,
+        "55-64": 9081,
+        "75+": 10026,
+        "25-34": 6815,
+        "45-54": 7431,
+        "35-44": 7116
+      },
+      "byCounty": {
+        "JACKSON": {
+          "65-74": 4293,
+          "18-24": 4016,
+          "55-64": 3870,
+          "75+": 3825,
+          "25-34": 3403,
+          "45-54": 3246,
+          "35-44": 3090
+        },
+        "SWAIN": {
+          "65-74": 1618,
+          "55-64": 1523,
+          "75+": 1243,
+          "45-54": 1220,
+          "35-44": 1108,
+          "25-34": 1021,
+          "18-24": 678
+        },
+        "TRANSYLVANIA": {
+          "65-74": 4975,
+          "75+": 4958,
+          "55-64": 3688,
+          "45-54": 2965,
+          "35-44": 2918,
+          "25-34": 2391,
+          "18-24": 1721
+        }
+      }
+    },
+    "precinctParty": {
+      "byCounty": {
+        "JACKSON": {
+          "BCK": {
+            "DEM": 264,
+            "LIB": 4,
+            "REP": 502,
+            "UNA": 501
+          },
+          "CAN": {
+            "DEM": 93,
+            "LIB": 3,
+            "REP": 197,
+            "UNA": 177
+          },
+          "CAS": {
+            "DEM": 307,
+            "GRE": 1,
+            "LIB": 5,
+            "REP": 663,
+            "UNA": 759
+          },
+          "CFK": {
+            "DEM": 164,
+            "LIB": 2,
+            "REP": 166,
+            "UNA": 242
+          },
+          "CUL": {
+            "DEM": 1350,
+            "GRE": 10,
+            "LIB": 50,
+            "REP": 942,
+            "UNA": 2804
+          },
+          "GCK": {
+            "DEM": 263,
+            "LIB": 6,
+            "REP": 333,
+            "UNA": 435
+          },
+          "GLV": {
+            "DEM": 274,
+            "GRE": 2,
+            "LIB": 5,
+            "REP": 733,
+            "UNA": 704
+          },
+          "QUA": {
+            "DEM": 833,
+            "GRE": 5,
+            "LIB": 23,
+            "REP": 1000,
+            "UNA": 1335
+          },
+          "RIV": {
+            "DEM": 186,
+            "LIB": 4,
+            "REP": 214,
+            "UNA": 330
+          },
+          "SAV": {
+            "DEM": 252,
+            "LIB": 9,
+            "REP": 384,
+            "UNA": 467
+          },
+          "SCC": {
+            "DEM": 402,
+            "GRE": 2,
+            "LIB": 12,
+            "REP": 535,
+            "UNA": 720
+          },
+          "SDC": {
+            "DEM": 1531,
+            "GRE": 1,
+            "LIB": 25,
+            "REP": 1381,
+            "UNA": 2255
+          },
+          "WEB": {
+            "DEM": 629,
+            "LIB": 6,
+            "REP": 476,
+            "UNA": 765
+          }
+        },
+        "SWAIN": {
+          "ALARKA": {
+            "DEM": 183,
+            "GRE": 1,
+            "LIB": 5,
+            "REP": 279,
+            "UNA": 246
+          },
+          "ALMOND": {
+            "DEM": 214,
+            "GRE": 1,
+            "LIB": 3,
+            "REP": 534,
+            "UNA": 478
+          },
+          "BC1": {
+            "DEM": 457,
+            "GRE": 2,
+            "LIB": 12,
+            "REP": 706,
+            "UNA": 794
+          },
+          "BC2": {
+            "DEM": 490,
+            "GRE": 3,
+            "LIB": 16,
+            "REP": 698,
+            "UNA": 750
+          },
+          "WHCH": {
+            "DEM": 707,
+            "GRE": 4,
+            "LIB": 23,
+            "REP": 644,
+            "UNA": 1161
+          }
+        },
+        "TRANSYLVANIA": {
+          "B1": {
+            "DEM": 459,
+            "GRE": 1,
+            "LIB": 9,
+            "REP": 335,
+            "UNA": 815
+          },
+          "B2": {
+            "DEM": 447,
+            "LIB": 7,
+            "REP": 332,
+            "UNA": 639
+          },
+          "B3": {
+            "DEM": 495,
+            "GRE": 2,
+            "LIB": 6,
+            "REP": 450,
+            "UNA": 838
+          },
+          "B4": {
+            "DEM": 405,
+            "GRE": 1,
+            "LIB": 6,
+            "REP": 315,
+            "UNA": 672
+          },
+          "BD": {
+            "DEM": 434,
+            "LIB": 14,
+            "REP": 871,
+            "UNA": 1180
+          },
+          "CC.1": {
+            "DEM": 326,
+            "GRE": 1,
+            "LIB": 15,
+            "REP": 827,
+            "UNA": 966
+          },
+          "CM": {
+            "DEM": 189,
+            "LIB": 7,
+            "REP": 207,
+            "UNA": 400
+          },
+          "DR": {
+            "DEM": 524,
+            "LIB": 5,
+            "REP": 679,
+            "UNA": 1178
+          },
+          "EF": {
+            "DEM": 189,
+            "LIB": 1,
+            "REP": 315,
+            "UNA": 478
+          },
+          "LR": {
+            "DEM": 256,
+            "LIB": 10,
+            "REP": 596,
+            "UNA": 665
+          },
+          "PF": {
+            "DEM": 206,
+            "GRE": 1,
+            "LIB": 6,
+            "REP": 374,
+            "UNA": 515
+          },
+          "RE.1": {
+            "DEM": 219,
+            "GRE": 2,
+            "LIB": 10,
+            "REP": 860,
+            "UNA": 901
+          },
+          "TC1": {
+            "DEM": 71,
+            "LIB": 4,
+            "REP": 396,
+            "UNA": 313
+          },
+          "TC7": {
+            "DEM": 244,
+            "LIB": 10,
+            "REP": 777,
+            "UNA": 627
+          },
+          "WC": {
+            "DEM": 325,
+            "LIB": 7,
+            "REP": 460,
+            "UNA": 721
+          }
+        }
+      }
+    }
+  }
+}
