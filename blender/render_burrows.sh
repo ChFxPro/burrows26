@@ -128,12 +128,12 @@ if [ "$CUT" = "30" ]; then
   CARD="$HERE/endcard/endcard.png"
   python3 "$SCRIPTS/make_endcard.py" "$CARD" >/dev/null
   read -r CS CF <<< "$(python3 -c "import json;c=json.load(open('$HERE/endcard.json'));print(c['start_seconds'],c['fade_seconds'])")"
-  OFF=$(python3 -c "print(max(0.0, $CS - ($FS - 1) / 24))")   # card start, relative to this encode
+  SKIP=$(python3 -c "print(($FS - 1) / 24)")   # this encode's start on the film's timeline
   CLEAN="${NAME%.mp4}_clean.mp4"
   ffmpeg -v error -y "${FRAMES[@]}" "${ENC[@]}" "$OUT/comp/$CLEAN"
   if python3 -c "import sys; sys.exit(0 if $CS < $FE / 24 else 1)"; then
     ffmpeg -v error -y "${FRAMES[@]}" -framerate 24 -loop 1 -i "$CARD" -filter_complex \
-      "[1:v]format=rgba,fade=t=in:st=$OFF:d=$CF:alpha=1[card];[0:v][card]overlay=0:0:shortest=1:format=auto" \
+      "[1:v]format=rgba,fade=t=in:st=$CS:d=$CF:alpha=1,trim=start=$SKIP,setpts=PTS-STARTPTS[card];[0:v][card]overlay=0:0:shortest=1:format=auto" \
       "${ENC[@]}" "$OUT/comp/$NAME"
     echo "Done: $OUT/comp/$NAME (end card from ${CS}s)  +  $OUT/comp/$CLEAN (no card)"
   else
