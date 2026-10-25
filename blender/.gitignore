@@ -1,0 +1,16 @@
+# Large / generated files stay out of git (renders live on the HeleneOYOH drive)
+*.blend
+*.blend1
+*.mp4
+*.mov
+*.exr
+*.jpg
+still_*.png
+backups/
+ab_test/
+cut30_preview/
+assets/out/
+assets/models/
+assets/burrows/
+__pycache__/
+.impeccable/
