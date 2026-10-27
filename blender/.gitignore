@@ -1,4 +1,4 @@
-# Large / generated files stay out of git (renders live on the HeleneOYOH drive)
+# Large / generated files stay out of git (renders live on HeleneOYOH / NORTHBEND; archive on the NAS)
 *.blend
 *.blend1
 *.mp4
@@ -14,3 +14,12 @@ assets/models/
 assets/burrows/
 __pycache__/
 .impeccable/
+assets/photos/
+node_modules/
+*.blend[0-9]
+.DS_Store
+# rescued scene-build data (GIS sources + prepared heightmaps), 1+ GB; see scripts/build/README.md
+assets/source/
+# loose review output: it belongs in $RENDERS/<cut>/review/ (see README.md)
+review/
+/*.png

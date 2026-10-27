@@ -1,0 +1,413 @@
+{
+  "_comment": "Campaign photos as physical prints over the 30s spot, rendered in three.js (photo3d/). src is relative to blender/assets/photos/src; crop = [left, top, right, bottom] fractions, framed on faces. Constant build: each print lands large at 'hero' [x, y, width, rot] (1920x1080 px, degrees) at frame 'in', holds ~2 s, then at 'settle' lifts and tucks into its collage 'slot' and stays, so the final frames show all of them around the edges with the film clear in the middle. Heroes sit in each shot's open area; slots are filled in shot order so the counties, markers, door logo and roof sign are never covered while on screen. spare_prints are not drawn.",
+  "prints": [
+    {
+      "name": "family",
+      "src": "family.jpg",
+      "crop": [
+        0.14,
+        0.24,
+        0.92,
+        0.96
+      ],
+      "caption": "Mark and family",
+      "in": 40,
+      "from": "left",
+      "hero": [
+        380,
+        760,
+        621,
+        -3
+      ],
+      "settle": 122,
+      "slot": [
+        250,
+        881,
+        370,
+        2
+      ]
+    },
+    {
+      "name": "early_voting_brevard",
+      "src": "early_voting_brevard.jpg",
+      "crop": [
+        0.08,
+        0.07,
+        0.98,
+        0.7
+      ],
+      "caption": "Early voting, Brevard",
+      "in": 122,
+      "from": "right",
+      "hero": [
+        1500,
+        440,
+        598,
+        3
+      ],
+      "settle": 179,
+      "slot": [
+        1690,
+        231,
+        370,
+        4
+      ]
+    },
+    {
+      "name": "chamber_coffee",
+      "src": "chamber_coffee.jpg",
+      "crop": [
+        0.12,
+        0.05,
+        1.0,
+        0.85
+      ],
+      "caption": "Chamber coffee",
+      "in": 179,
+      "from": "left",
+      "hero": [
+        430,
+        330,
+        575,
+        4
+      ],
+      "settle": 236,
+      "slot": [
+        230,
+        209,
+        370,
+        -4
+      ]
+    },
+    {
+      "name": "canvassing",
+      "src": "canvassing.jpg",
+      "crop": [
+        0.0,
+        0.08,
+        1.0,
+        0.92
+      ],
+      "caption": "Canvassing with volunteers",
+      "in": 236,
+      "from": "left",
+      "hero": [
+        760,
+        250,
+        540,
+        -3
+      ],
+      "settle": 293,
+      "slot": [
+        638,
+        156,
+        336,
+        3
+      ]
+    },
+    {
+      "name": "letter_writers",
+      "src": "letter_writers.jpg",
+      "crop": [
+        0.15,
+        0.1,
+        0.66,
+        0.635
+      ],
+      "caption": "Community letter writers",
+      "in": 293,
+      "from": "right",
+      "hero": [
+        1470,
+        520,
+        598,
+        -3
+      ],
+      "settle": 350,
+      "slot": [
+        1732,
+        560,
+        325,
+        -3
+      ]
+    },
+    {
+      "name": "young_voters",
+      "src": "young_voters.jpg",
+      "crop": [
+        0.1,
+        0.12,
+        0.75,
+        0.75
+      ],
+      "caption": "Talking with young voters",
+      "in": 350,
+      "from": "right",
+      "hero": [
+        1560,
+        800,
+        552,
+        3
+      ],
+      "settle": 407,
+      "slot": [
+        1670,
+        881,
+        370,
+        -3
+      ]
+    },
+    {
+      "name": "wcu_students",
+      "src": "wcu_students.jpg",
+      "crop": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "caption": "Helping out WCU students",
+      "in": 407,
+      "from": "right",
+      "hero": [
+        1620,
+        360,
+        529,
+        -4
+      ],
+      "settle": 464,
+      "slot": [
+        1322,
+        176,
+        336,
+        -2
+      ]
+    },
+    {
+      "name": "platt_house",
+      "src": "platt_house.jpg",
+      "crop": [
+        0.06,
+        0.02,
+        1.0,
+        0.86
+      ],
+      "caption": "At the Platt House",
+      "in": 464,
+      "from": "left",
+      "hero": [
+        640,
+        760,
+        552,
+        -3
+      ],
+      "settle": 521,
+      "slot": [
+        658,
+        929,
+        336,
+        -2
+      ]
+    },
+    {
+      "name": "mark_ager",
+      "src": "mark_ager.jpg",
+      "crop": [
+        0.0,
+        0.0,
+        1.0,
+        0.62
+      ],
+      "caption": "Mark & Jamie Ager",
+      "in": 521,
+      "from": "left",
+      "hero": [
+        430,
+        430,
+        575,
+        3
+      ],
+      "settle": 566,
+      "slot": [
+        188,
+        560,
+        325,
+        3
+      ]
+    }
+  ],
+  "spare_prints": [
+    {
+      "name": "west_fest",
+      "src": "west_fest.jpg",
+      "crop": [
+        0.05,
+        0.32,
+        0.85,
+        0.98
+      ],
+      "caption": "West Fest",
+      "in": 150,
+      "out": 240,
+      "x": 420,
+      "y": 805,
+      "width": 520,
+      "rot": -3,
+      "from": "left"
+    },
+    {
+      "name": "ager_group",
+      "src": "ager_group.jpg",
+      "crop": [
+        0.05,
+        0.22,
+        0.86,
+        0.9
+      ],
+      "caption": "Ager event, July 13",
+      "in": 58,
+      "out": 114,
+      "x": 560,
+      "y": 860,
+      "width": 340,
+      "rot": 4,
+      "from": "left"
+    },
+    {
+      "name": "one_on_one",
+      "src": "one_on_one.jpg",
+      "crop": [
+        0.0,
+        0.02,
+        1.0,
+        0.78
+      ],
+      "caption": "One-on-one with voters",
+      "in": 216,
+      "out": 287,
+      "land": 5,
+      "exit": 0,
+      "x": 480,
+      "y": 770,
+      "width": 560,
+      "rot": -3.0,
+      "from": "left"
+    },
+    {
+      "name": "neighbor",
+      "src": "neighbor.jpg",
+      "crop": [
+        0.08,
+        0.12,
+        0.92,
+        0.75
+      ],
+      "caption": "Out meeting voters",
+      "in": 236,
+      "out": 286,
+      "x": 330,
+      "y": 250,
+      "width": 380,
+      "rot": 4.0,
+      "from": "left"
+    },
+    {
+      "name": "meet_greet",
+      "src": "meet_greet.jpg",
+      "crop": [
+        0.08,
+        0.12,
+        0.92,
+        1.0
+      ],
+      "caption": "Meet & greet",
+      "in": 326,
+      "out": 382,
+      "x": 330,
+      "y": 800,
+      "width": 420,
+      "rot": -4,
+      "from": "left"
+    },
+    {
+      "name": "wcu_mascot",
+      "src": "wcu_mascot.jpg",
+      "crop": [
+        0.0,
+        0.18,
+        1.0,
+        0.93
+      ],
+      "caption": "Go Catamounts!",
+      "in": 412,
+      "out": 454,
+      "x": 1650,
+      "y": 790,
+      "width": 330,
+      "rot": -5,
+      "from": "right"
+    },
+    {
+      "name": "neighbors",
+      "src": "neighbors.jpg",
+      "crop": [
+        0.17,
+        0.08,
+        0.85,
+        0.94
+      ],
+      "caption": "Meeting neighbors",
+      "in": 474,
+      "out": 526,
+      "x": 360,
+      "y": 800,
+      "width": 400,
+      "rot": 4,
+      "from": "left"
+    },
+    {
+      "name": "postcards",
+      "src": "postcards.jpg",
+      "crop": [
+        0.21,
+        0.24,
+        0.97,
+        1.0
+      ],
+      "caption": "Postcards for Mark",
+      "in": 488,
+      "out": 526,
+      "x": 1620,
+      "y": 820,
+      "width": 400,
+      "rot": 2.5,
+      "from": "right"
+    },
+    {
+      "name": "ager_burrows_group",
+      "src": "ager_burrows_group.jpg",
+      "crop": [
+        0.0,
+        0.15,
+        1.0,
+        0.95
+      ],
+      "caption": "With Jamie Ager & friends",
+      "in": 562,
+      "out": 599,
+      "x": 1600,
+      "y": 780,
+      "width": 400,
+      "rot": -4,
+      "from": "right"
+    }
+  ],
+  "build": {
+    "land_frames": 18,
+    "move_frames": 18,
+    "clear": 598,
+    "_clear": "film frame where the prints sweep off toward their own side (end tag starts at 613; all gone by 612). null = stay",
+    "clear_frames": 10,
+    "clear_stagger": 0.5
+  }
+}
