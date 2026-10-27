@@ -1,0 +1,337 @@
+# Burrows film — cleanup plan
+
+Plan only, written 2026-10-25. Nothing has been deleted, moved or committed. Every size below was
+measured with `du -sh` today (read-only). Review it, cross out what you disagree with, then run the
+steps in [Commands](#commands-in-order) one phase at a time.
+
+## Read this first
+
+1. **The HeleneOYOH drive is full: 78 MB free of 931 GB.** Any render or deliverable written now can
+   fail part-way. The photo/colour session is writing into `cut30/` today. The fastest safe win is
+   on the drive, but outside this project: `Adobe Cache/` at the drive root is **328 GB** (Premiere
+   media cache) and `$RECYCLE.BIN` is **7.7 GB**. See [Drive-wide, not this film](#drive-wide-not-this-film).
+2. **The scene build exists only in a temp folder.** The scripts that built the terrain (`geo.py`,
+   `tiles.py`, `blender_trees.py`, `build_comp.py` and about 25 more) and the GIS source data (DEM, NAIP
+   imagery, OSM, counties) live only in scratchpad `bacd06af…` under `/private/tmp`, which macOS
+   can clear on reboot. Two repo scripts (`add_outer_world.py`, `add_valley_fog.py`) read from it, and
+   **the long film `burrows_wnc_route_tour.blend` links its 188 terrain textures there** (the 30 s blend
+   correctly links `blender/assets/out/`). Phase 0 copies all of it to a permanent place. Do this first.
+3. **Premiere links files in `deliver_v1_no_photos/`.** `County Travel Burrows.prproj` uses
+   v1's CLEAN master, WEB and PREVIEW (plus the current MASTER from `deliver/`), and a music folder at
+   `3D/images/find-my-way-…`. Relink before deleting either of them.
+4. **Don't touch `cut30/`, `photos.json`, `assets/photos/` or the two newest scratchpads until the
+   photo/colour session has finished.** Every step that touches them is in a later phase.
+
+## Summary
+
+| Group | Space | Where |
+|---|---|---|
+| **Delete** | **≈ 61 GB** | 42 GB old shot backups, 10 GB scratchpads, ≈ 8.5 GB drive intermediates and `._` files, 0.4 GB loose repo files |
+| **Ask** | up to **≈ 107 GB** | long-film plate and overlays 97 GB, `deliver_v1_no_photos` 4.7 GB, `.blend` checkpoints 0.8 GB, others |
+| **Archive** (after the spot is locked) | 57 GB | 30 s EXR plate, the only output that costs hours to rebuild |
+| **Keep** | — | deliverables, `.blend` files, scripts, assets, photo and music sources, comp frames |
+
+The 61 GB splits by disk: **≈ 53 GB on the Mac's internal disk** (53 GB free now, so about
+106 GB free afterwards) and **≈ 8.5 GB on HeleneOYOH**. To free real space on the drive, you need
+the Ask items or the Adobe cache.
+
+## How to rebuild each kind of output
+
+Times come from today's render logs on this Mac (M-series GPU).
+
+| Output | Command (from `blender/`) | Time |
+|---|---|---|
+| 30 s Cycles plate (`cut30/exr`, 720 EXR) | `CUT=30 ./render_burrows.sh plate` | **≈ 6–7 h** (≈ 32 s/frame); frames 1–119 are copied from the long plate if it still exists, otherwise add ≈ 1 h |
+| 30 s overlays (`cut30/overlays`) | `CUT=30 ./render_burrows.sh overlays` | ≈ 11 min |
+| 30 s graded comp frames + test MP4s (`cut30/comp`) | `CUT=30 ./render_burrows.sh comp` | ≈ 35–40 min |
+| Photo prints (`assets/photos/prints`) | `python3 scripts/make_photo_prints.py` | seconds |
+| Per-frame photo layer (`cut30/photos`) | `python3 scripts/make_photo_layer.py` (also run by `deliver_online.sh`) | ≈ 1–2 min |
+| Deliverables (`cut30/deliver`) | `scripts/deliver_online.sh` | ≈ 3 min (rebuilds prints and photo layer too) |
+| End card + previews | `python3 scripts/make_endcard.py endcard/endcard.png` | seconds |
+| Long-film plate (1718 frames, 1131 done) | `./render_burrows.sh plate` | ≈ 13.6 h total (≈ 28.5 s/frame); the remaining 587 frames take ≈ 4.6 h |
+| Any review MP4 (phone, 720p) | `ffmpeg` from the master in `deliver/` | seconds |
+
+---
+
+## 1. Repo: `blender/` in this worktree
+
+1.9 GB in total. Files date from Oct 22 09:12 to Oct 25 14:10. Everything large is already gitignored, so none
+of it is in git. It sits on the internal disk.
+
+| Item | Size | Dates | Group | Reason |
+|---|---|---|---|---|
+| `burrows_30s.blend` | 132 MB | Oct 24 17:24 | **Keep** | 30 s scene |
+| `burrows_wnc_route_tour.blend` | 132 MB | Oct 23 13:23 | **Keep** | long-film scene (repath textures in Phase 0) |
+| `burrows_comp_30s.blend`, `burrows_comp.blend` | 0.3 MB | Oct 25 / Oct 22 | **Keep** | comp graphs |
+| `scripts/`, `render_burrows.sh`, `cut30_maps.json`, `endcard.json`, `photos.json` | 0.2 MB | — | **Keep** | pipeline (see §3 for committing) |
+| `assets/out/` (terrain cells, strips, base_sat, outer_tex) | 334 MB | Oct 22–23 | **Keep** | linked by the 30 s blend; can't be rebuilt without the scratchpad data |
+| `assets/models/` (Subaru), `assets/burrows/`, `assets/marker_badge.png` | 29 MB | Oct 22–24 | **Keep** | linked by both blends |
+| `assets/photos/src/` (18 photos) | 50 MB | Oct 25 | **Keep** | photo sources for the prints (session is editing) |
+| `assets/photos/prints/` | 59 MB | Oct 25 | **Keep** | regenerated by `make_photo_prints.py`; leave in place, the pipeline writes it |
+| `endcard/endcard.png` | 0.1 MB | Oct 25 | **Keep** | tracked; regenerated each render |
+| `*.blend1` ×3 (`burrows_30s`, `burrows_wnc_route_tour`, `burrows_comp_30s`) | 263 MB | Oct 23–24 | **Delete** | Blender's auto "previous save"; superseded |
+| `burrows_30s_phone.mp4`, `_v2_`, `_v3_`, `_v4_phone.mp4` | 67 MB | Oct 24 | **Delete** | old review encodes; superseded by `deliver/` |
+| `burrows_30s_FINAL_preview_720p.mp4` | 17 MB | Oct 24 18:59 | **Delete** | byte-identical size to `deliver_v1_no_photos/…PREVIEW_720p.mp4`, a copy |
+| `burrows_30s_PHOTOS_preview_720p.mp4` | 17 MB | Oct 25 12:53 | **Delete** (Phase 2) | earlier photo version; current one is in `deliver/` |
+| `burrows_30s_PREVIEW_first10s.mp4` | 7 MB | Oct 23 | **Delete** | same file as `cut30/preview/` copy; pre-grade |
+| `preview_subaru_0001-1594.mp4`, `cu_cashiers_v2.mp4`, `wheel_spin_test.mp4` | 25 MB | Oct 22–24 | **Delete** | test renders |
+| `marker_preview.jpg`, `photos_preview_frames.jpg`, `realism_pass_frames.jpg` | 1.5 MB | Oct 24–25 | **Delete** | review contact sheets |
+| `ab_test/` (2 JPGs) | 1.8 MB | Oct 22 | **Delete** | old A/B stills |
+| `cut30_preview/*.jpg/png` (12 review sheets) | 4 MB | Oct 23 | **Delete** | label/logo/lighting decisions already made |
+| `endcard/endcard_preview.jpg`, `endcard_test_sheet.jpg` | 0.6 MB | Oct 23–24 | **Delete** | written by `make_endcard.py` |
+| `scripts/__pycache__/` | — | — | **Delete** | Python cache |
+| `cut30_preview/color_pass/` | 19 MB | Oct 25 14:13 | **Ask** | colour-pass comparison stills, written today; keep until you sign off the grade |
+| `backups/burrows_wnc_route_tour.pre_*.blend` ×5 | 655 MB | Oct 22–23 | **Ask** | checkpoints before fog/labels/logofit/treeclear/wrapfix. Superseded, but the only way back to those states. Suggest: keep the newest (`pre_logofit`), delete the rest |
+| `backups/pre_cu_fix/` (blend, comp blend, maps, script) | 131 MB | Oct 24 08:51 | **Ask** | checkpoint before the close-up fix; delete once the spot is approved |
+| `still_overview_final.png`, `still_chase_jackson.png` | 7 MB | Oct 22 | **Ask** | early stills; keep if you use them for social, otherwise delete |
+
+**Delete total: ≈ 0.4 GB.** Ask: ≈ 0.8 GB.
+
+## 2. Main checkout and other worktrees
+
+None holds film output. The main checkout `/Users/jeffbannister/Code/burrows26` is 2.4 GB, of which 1.9 GB is
+this worktree. The rest is web and campaign material (`Mark Burrows Headshots/` 324 MB, `nc119-dashboard/`,
+`promos/`, and the untracked `Burrows_NC119_Graphic_Pack.zip`, `brand/`, `content/`). That's out of scope for this plan.
+
+| Worktree | Branch | Size | Uncommitted / unpushed | Group |
+|---|---|---|---|---|
+| main checkout | `main` = origin/main | 2.4 GB | modified `nc119-dashboard/src/App.tsx`, many untracked campaign files; nothing unpushed | **Keep**, unrelated work in progress |
+| `burrows-vehicle-scene-nc-3161ff` (this one) | pushed to origin, 0 unpushed | 1.9 GB | 3 modified + 3 untracked pipeline files (§3) | **Keep** |
+| `3d-logo-blender-texture-89fe6c` | at `main`, no upstream | 0.9 MB | clean, no commits of its own | **Ask**, safe to `git worktree remove` |
+| `dem-convention-slowmo-clips-7d0b95` | at `main`, no upstream | 0.9 MB | only `.impeccable/` cache | **Ask**, safe to remove |
+| `ferguson-opposition-research-5da806` | at `main`, no upstream | 3 MB | **untracked `research/`, uncommitted work** | **Keep**, don't remove |
+
+## 3. External drive: `/Volumes/HeleneOYOH/Burrows Campaign 26/`
+
+172 GB in `renders/`, plus the Premiere project. exFAT with **1 MB clusters**: each of the **4,907
+`._` AppleDouble files** (4 KB of macOS metadata each) takes a full 1 MB, **≈ 4.8 GB in total**.
+Frame counts below exclude the `._` files.
+
+### 3a. 30-second cut: `renders/cut30/` (74 GB, Oct 23 15:36 to Oct 25 14:12). Read-only until the photo session ends.
+
+| Item | Size | Contents | Dates | Group | Reason |
+|---|---|---|---|---|---|
+| `deliver/` | 4.7 GB | MASTER + CLEAN ProRes 422 HQ, WEB 1080p, PREVIEW 720p (with photos) | Oct 25 14:11–14:12 | **Keep** | final deliverables, linked in Premiere |
+| `exr/` | 57 GB | 720 multipass EXR (≈ 80 MB each) | Oct 23 18:50 to Oct 24 16:48 | **Keep → Archive** | ≈ 6–7 h of GPU to rebuild, and the grade needs its Cryptomatte passes. Keep until the spot is locked, then copy to a second drive or cloud |
+| `comp/frames/` | 3.3 GB | 720 graded comp PNGs (`c_0001…0720`) | to Oct 25 14:10 | **Keep** | input to `deliver_online.sh`; rebuilding takes ≈ 40 min |
+| `overlays/` | 1.4 GB | 720 EEVEE overlay PNGs | Oct 24 17:25–17:36 | **Keep** (delete once locked) | input to comp; rebuilding takes 11 min |
+| `photos/` | 1.6 GB | 720 per-frame photo-layer PNGs | Oct 25 14:10–14:11 | **Delete** (Phase 2) | rewritten by every `deliver_online.sh` run (≈ 1–2 min) |
+| `comp/burrows_30s_1-2*.mp4`, `_1-455*.mp4`, `_1-720*.mp4` | ≈ 250 MB | range-test encodes from `render_burrows.sh comp` | Oct 24–25 | **Delete** (Phase 2) | superseded by `deliver/`; the next comp run writes them again |
+| `preview/` | 364 MB | 123 quarter-res PNGs + first-10 s MP4 | Oct 23 15:39–16:37 | **Delete** (Phase 2) | pre-grade timing preview |
+| `deliver_v1_no_photos/` | 4.7 GB | v1 masters + web + preview without photos | Oct 24 18:57–18:59 | **Ask** | **Premiere links 3 of these files.** Suggest: relink Premiere to `deliver/`, keep only v1's WEB 1080p (114 MB) as a record, delete the two ProRes files (4.6 GB) |
+| `render_30s_log.txt`, `render_cu_log.txt` | 3 MB | render logs | Oct 24 | **Keep** | small; source of the timings above |
+
+### 3b. Long route film: `renders/` top level (98 GB, Oct 22 21:26 to Oct 23 09:08)
+
+| Item | Size | Contents | Group | Reason |
+|---|---|---|---|---|
+| `exr/` | 96 GB | 1131 of 1718 plate frames (stopped by `STOP_AT`, Oct 23 06:30) | **Ask** | ≈ 9 h of GPU already spent. If the long film is still planned, keep it (rendering only needs ≈ 4.6 h more). If it's dropped, deleting frees 96 GB, and the 30 s plate would then render its own intro if it ever had to be rebuilt |
+| `overlays/` | 851 MB | 400 of 1718 overlay PNGs | **Ask** | goes with `exr/`; rebuild is minutes |
+| `comp/test_frames/` + `TEST_burrows_0001-0339.mp4` | 1.5 GB | Oct 23 test comp of frames 1–339 | **Delete** | made before the labels, logo and grade changes; superseded |
+| `preview/` | empty | — | **Delete** | empty folder |
+| `render_log.txt` | 37 MB | long-plate log | **Archive** | gzip it to about 2 MB |
+
+### 3c. Premiere and drive housekeeping
+
+| Item | Size | Group | Reason |
+|---|---|---|---|
+| `County Travel Burrows.prproj`, `.prin`, `Adobe Premiere Pro Auto-Save/`, `…Audio Previews/`, `…Captured and Generated/` | ≈ 11 MB | **Keep** | your edit project, active today |
+| 4,907 `._*` files across `Burrows Campaign 26/` | ≈ 4.8 GB | **Delete** (Phase 3) | macOS metadata (provenance and quarantine xattrs). No image data. They come back on new renders |
+
+### Drive-wide, not this film
+
+| Item | Size | Group | Reason |
+|---|---|---|---|
+| `/Volumes/HeleneOYOH/Adobe Cache/` | **328 GB** | **Ask** | Premiere media cache (conformed audio, peak files) for every project on the drive. Clear it from Premiere: *Settings › Media Cache › Delete…*. Premiere rebuilds what it needs |
+| `/Volumes/HeleneOYOH/$RECYCLE.BIN` | 7.7 GB | **Ask** | Windows recycle bin. Emptying it is permanent, so do it yourself |
+
+## 4. `~/Burrows Render Backups/` (43 GB, internal disk)
+
+Backup sets of shots taken before each re-render, each with a `filelist.txt` and a `staging/` copy.
+
+| Folder | Size | Contents | Dates | Group | Reason |
+|---|---|---|---|---|---|
+| `cut30_closeups_v1/` | 15 GB | 217 EXR + 434 PNG, frames 216+ | Oct 23 19:41 to Oct 24 09:05 | **Delete** | first close-up version, re-rendered twice since |
+| `cut30_closeups_v3_hazy/` | 12 GB | 217 EXR + 434 PNG | Oct 24 09:57–15:08 | **Delete** | the hazy version, fixed |
+| `cut30_brevard_treepop/` | 5.6 GB | 64 EXR + 128 PNG, frames 152+ | Oct 23 19:13 to Oct 24 14:28 | **Delete** | before the tree-pop fix |
+| `cut30_closeups_v2_badwheels/` | 4.7 GB | 84 EXR + 144 PNG + 2 MP4 | Oct 24 09:09–09:55 | **Delete** | the bad-wheel version |
+| `cut30_balloon_marker/` | 2.5 GB | 1440 PNG overlays + comp, 10 MP4 | Oct 24 00:08–17:25 | **Delete** | before the marker-badge change |
+| `cut30_pre_realism_comp/` | 2.2 GB | 720 comp PNG + 2 MP4 | Oct 24 17:36–18:18 | **Delete** | before the realism grade |
+| `cut30_pre_final_color_pass/` | 1.0 GB | 359 comp PNG, old comp blend, old grade, `photos.json.18prints` | Oct 24 18:19 to **Oct 25 15:19** | **Ask** | the colour/photo session is using it today; keep until you sign off the final grade and photos |
+
+**Delete total: ≈ 42 GB.** Each set only matters if you want to roll a shot back to a rejected version.
+Watch the final `deliver/burrows_30s_PREVIEW_720p.mp4` once before deleting them.
+
+## 5. Desktop source: `~/Desktop/Politics Local/Burrows 26/3D/` (2.3 GB)
+
+| Item | Size | Dates | Group | Reason |
+|---|---|---|---|---|
+| `images/NCDP-Burrows Shared Images/`, `July 13 Ager Event/`, `Mark_s Photos for Campaign/`, `From Gmail/` | 1.06 GB | 2024-10 to 2026-10-25 | **Keep** | photo sources; `assets/photos/src` is cropped from these |
+| `music/` (5 tracks with stems, loops and shorts, plus 2 single tracks) | 1.1 GB | 2019 to 2026-10-25 | **Keep** | linked in Premiere |
+| `images/find-my-way-2026-05-07-03-16-39-utc/` | 208 MB | Oct 25 | **Ask** | **byte-identical** to `music/find-my-way-…` (checked with `diff -rq`), but **Premiere links this copy**. Relink Premiere to `music/`, then delete this one |
+| `Burrows26_Logo_3D*.blend/.png`, `anim_frames/`, `anim_render.log` | 0 B on disk | Oct 15–16 | **Keep** | logo project, not this film; iCloud has offloaded them ("dataless") |
+| partial `.zip.download` | — | — | — | **not found** today in `3D/`, `Burrows 26/` or `~/Downloads`; it was probably finished or removed already |
+
+## 6. Claude scratchpads: `/private/tmp/claude-501/-Users-jeffbannister-Code-burrows26--claude-worktrees-burrows-vehicle-scene-nc-3161ff/`
+
+12 GB in total. `/private/tmp` can be cleared by macOS, so nothing here should be the only copy of anything.
+
+| Scratchpad | Size | Dates | Contents | Group | Reason |
+|---|---|---|---|---|---|
+| `bacd06af…/scratchpad/scripts/` | 0.2 MB | Oct 22 | 30 scene-build scripts (`geo.py`, `tiles.py`, `prep*.py`, `naip_fetch*.sh`, `blender_*.py`, `build_comp.py`…) | **Keep: rescue to repo** | the only copy of how the terrain was built |
+| `bacd06af…/scratchpad/data/` | 613 MB | Oct 22 | DEM, NAIP, OSM, counties, tiles | **Keep: rescue** | source GIS data; needs a re-download to replace |
+| `bacd06af…/scratchpad/out/` | 508 MB | Oct 22 | heightmaps (`*.npy`), `vectors.json`, `outer_*`, cells, strips, `comp_keys.json` | **Keep: rescue** | long blend links its textures here; `add_outer_world.py` and `add_valley_fog.py` read it |
+| `bacd06af…/scratchpad/venv/`, `renders/` | 328 MB | Oct 22 | Python venv, early test renders | **Delete** | venv can be recreated; renders are tests |
+| `d40f9136…` | 6.3 GB | Oct 23 13:28 to Oct 25 13:09 | `rtest/` 4.4 GB, `ectest/` 1.4 GB, `phl/`, `test135.blend`, `rg/`, `haze/` | **Delete** | render and grade tests |
+| `50871254…` | 3.7 GB | Oct 22–23 | `ab/`, `dryrun/`, `logofit/`, `labeltest/`, `renders/`, `golden_test.blend1` | **Delete** | early look tests |
+| `f4989a7a…` | 166 MB | Oct 25 13:11–14:13 | photo-layer tests (`ph/`, thumbs, timelines) | **Delete** (Phase 5) | probably the active photo session: wait for it to finish |
+| `ab80205c…` | 141 MB | Oct 25 13:41–15:19 | colour-pass versions `v1`–`v4`, `dbg/` | **Delete** (Phase 5) | active today: wait for it to finish |
+| `642f4900…`, `af2bfcbe…`, `c333be8f…` | 0 | — | empty | **Delete** | — |
+| `586adef6…` | 4 KB | today | this planning session | **Delete** (Phase 5) | — |
+
+**Delete total: ≈ 10.5 GB.**
+
+---
+
+## 7. Repo hygiene
+
+**Where things are written now.** `render_burrows.sh` and `deliver_online.sh` already write every
+render to `$RENDERS` (default `/Volumes/HeleneOYOH/Burrows Campaign 26/renders`): long film at the top
+level, 30 s cut in `cut30/{exr,overlays,comp/frames,photos,preview,deliver}`. The loose files in
+`blender/` come from ad-hoc review encodes and stills made by hand in past sessions, not from the scripts.
+Two exceptions in code:
+- `scripts/add_outer_world.py` and `scripts/add_valley_fog.py` hard-code the `bacd06af…` scratchpad path.
+- `burrows_comp_30s.blend` stores a relative path back to the long film's `renders/exr` and `overlays/`.
+  That's harmless, because `comp_frames.py` overrides both on every run.
+
+**Commit (one commit, once the photo/colour session has finished and you've approved the result):**
+- `blender/photos.json`, `blender/scripts/make_photo_layer.py`, `blender/scripts/make_photo_prints.py` (untracked)
+- `blender/scripts/deliver_online.sh`, `blender/scripts/realism_grade.py`, `blender/.gitignore` (modified)
+- Leave the root `.DS_Store` change out of it.
+
+**Add (second commit):** the rescued build scripts as `blender/scripts/build/` and a short README naming
+the data they expect. Point `add_outer_world.py` and `add_valley_fog.py` at `blender/assets/source/`
+instead of the scratchpad.
+
+**`.gitignore` changes:**
+- `blender/.gitignore`: add `assets/source/` (GIS data, 1.1 GB), `review/`, `*.blend[0-9]`, `*.png`
+  with `!assets/marker_badge.png` and `!endcard/endcard.png` (both tracked), and `.DS_Store`.
+  `*.mp4`, `*.jpg` and `*.blend1` are already ignored, so loose renders never reached git. They just pile up.
+- Root `.gitignore`: add `.DS_Store` and `.impeccable/`, and run `git rm --cached .DS_Store src/.DS_Store`
+  (both are tracked now and show as modified in every worktree).
+
+**Layout so future output lands in one place:**
+
+```
+blender/                         (repo: sources only)
+  *.blend, scripts/, scripts/build/, *.json, endcard/endcard.png
+  assets/{models,burrows,out,photos/src,source}   (gitignored, needed to render)
+/Volumes/HeleneOYOH/Burrows Campaign 26/renders/   ($RENDERS: everything rendered)
+  exr/ overlays/ comp/                 long film (as now)
+  cut30/{exr,overlays,comp/frames,photos,deliver}  (as now)
+  cut30/review/<yyyy-mm-dd>_<topic>/   phone encodes, contact sheets, A/B stills
+  cut30/backups/<yyyy-mm-dd>_<topic>/  shot backups before a re-render (instead of ~/Burrows Render Backups)
+  archive/                             locked versions, e.g. deliver_v1
+```
+
+The scripts already handle the first two levels. The new piece is a rule for sessions: review files go
+to `cut30/review/` and shot backups go to `cut30/backups/`, never into `blender/` or the home folder.
+Moving the long film into `renders/long/` would be tidier, but it needs edits in `render_burrows.sh`
+(the `OUT` path and the intro copy). It's not worth it unless the long film continues. Backups can only
+move to the drive once it has free space.
+
+---
+
+## Commands, in order
+
+Each phase moves things into a holding folder first, which is **reversible**: a rename on the same
+disk, instant, nothing lost. A final step empties the holding folders, which is **irreversible**.
+Moving into a holding folder frees no space until it is emptied. Run the commands from a Terminal.
+
+```bash
+R="/Volumes/HeleneOYOH/Burrows Campaign 26/renders"
+W="/Users/jeffbannister/Code/burrows26/.claude/worktrees/burrows-vehicle-scene-nc-3161ff/blender"
+SP="/private/tmp/claude-501/-Users-jeffbannister-Code-burrows26--claude-worktrees-burrows-vehicle-scene-nc-3161ff"
+HOLD_INT="$HOME/Burrows_TO_DELETE_2026-10"          # internal disk
+HOLD_EXT="/Volumes/HeleneOYOH/Burrows_TO_DELETE_2026-10"   # same drive as the renders
+```
+
+### Phase 0: rescue the scene build (do now; doesn't touch the other session's files)
+
+| # | Step | Reversible? |
+|---|---|---|
+| 0.1 | `mkdir -p "$W/assets/source" "$W/scripts/build"` | yes |
+| 0.2 | `cp -Rp "$SP/bacd06af-2e64-4e0c-bebd-15b29cb5b4c0/scratchpad/data" "$SP/bacd06af-2e64-4e0c-bebd-15b29cb5b4c0/scratchpad/out" "$W/assets/source/"` (1.1 GB) | yes (copy) |
+| 0.3 | `rsync -a --exclude __pycache__ "$SP/bacd06af-2e64-4e0c-bebd-15b29cb5b4c0/scratchpad/scripts/" "$W/scripts/build/"` | yes (copy) |
+| 0.4 | `cp -p "$W/burrows_wnc_route_tour.blend" "$W/backups/burrows_wnc_route_tour.pre_repath.blend"` | yes |
+| 0.5 | Repath the long film's textures to `assets/out` (same files: `cmp` checked identical):<br>`/Applications/Blender.app/Contents/MacOS/Blender -b "$W/burrows_wnc_route_tour.blend" --python-expr "import bpy; old='$SP/bacd06af-2e64-4e0c-bebd-15b29cb5b4c0/scratchpad/out'; new='$W/assets/out'; [setattr(i,'filepath',bpy.path.abspath(i.filepath).replace(old,new)) for i in bpy.data.images if old in bpy.path.abspath(i.filepath)]; bpy.ops.wm.save_mainfile()"`, then open it and check *File › External Data › Report Missing Files* shows none | yes (backup from 0.4) |
+| 0.6 | Later, in code: point `add_outer_world.py` and `add_valley_fog.py` at `assets/source/out` (§7) | yes (git) |
+
+### Phase 1: repo loose files (any time; none are used by the other session)
+
+| # | Step | Reversible? |
+|---|---|---|
+| 1.1 | `mkdir -p "$HOLD_INT/repo"` | yes |
+| 1.2 | `cd "$W" && mv burrows_30s.blend1 burrows_wnc_route_tour.blend1 burrows_comp_30s.blend1 burrows_30s_phone.mp4 burrows_30s_v2_phone.mp4 burrows_30s_v3_phone.mp4 burrows_30s_v4_phone.mp4 burrows_30s_FINAL_preview_720p.mp4 burrows_30s_PREVIEW_first10s.mp4 preview_subaru_0001-1594.mp4 cu_cashiers_v2.mp4 wheel_spin_test.mp4 marker_preview.jpg realism_pass_frames.jpg ab_test "$HOLD_INT/repo/"` | yes |
+| 1.3 | `cd "$W" && mkdir -p "$HOLD_INT/repo/cut30_preview" "$HOLD_INT/repo/endcard" && mv cut30_preview/*.jpg cut30_preview/*.png "$HOLD_INT/repo/cut30_preview/" && mv endcard/endcard_preview.jpg endcard/endcard_test_sheet.jpg "$HOLD_INT/repo/endcard/" && rm -rf scripts/__pycache__` | yes (pycache is regenerated) |
+
+### Phase 2: after the photo/colour session has finished
+
+| # | Step | Reversible? |
+|---|---|---|
+| 2.1 | Check that nothing is still rendering: `pgrep -fl "Blender\|ffmpeg\|make_photo"` should print nothing | — |
+| 2.2 | `cd "$W" && mv burrows_30s_PHOTOS_preview_720p.mp4 photos_preview_frames.jpg "$HOLD_INT/repo/"` | yes |
+| 2.3 | `mkdir -p "$HOLD_EXT/cut30/comp" "$HOLD_EXT/long"` | yes |
+| 2.4 | `mv "$R/cut30/photos" "$R/cut30/preview" "$HOLD_EXT/cut30/" && mv "$R"/cut30/comp/burrows_30s_*.mp4 "$HOLD_EXT/cut30/comp/"` | yes |
+| 2.5 | `mv "$R/comp" "$HOLD_EXT/long/comp" && rmdir "$R/preview"` | yes |
+| 2.6 | `gzip -9 "$R/render_log.txt"` | yes (`gunzip`) |
+| 2.7 | Commit the photo and colour pipeline files (§7) | yes (git) |
+
+### Phase 3: `._` metadata files on the drive (after Phase 2)
+
+| # | Step | Reversible? |
+|---|---|---|
+| 3.1 | Dry run, review the count (≈ 4,900): `find "/Volumes/HeleneOYOH/Burrows Campaign 26" -name '._*' -type f -size -9k \| wc -l` | — |
+| 3.2 | `find "/Volumes/HeleneOYOH/Burrows Campaign 26" -name '._*' -type f -size -9k -delete` (≈ 4.8 GB) | **no**, but they hold only xattrs, no image data |
+
+### Phase 4: old shot backups (after watching the final preview once)
+
+| # | Step | Reversible? |
+|---|---|---|
+| 4.1 | `B="$HOME/Burrows Render Backups"; mkdir -p "$HOLD_INT/backups" && mv "$B/cut30_closeups_v1" "$B/cut30_closeups_v2_badwheels" "$B/cut30_closeups_v3_hazy" "$B/cut30_brevard_treepop" "$B/cut30_balloon_marker" "$B/cut30_pre_realism_comp" "$HOLD_INT/backups/"` | yes |
+
+### Phase 5: scratchpads (after every Burrows session has finished)
+
+| # | Step | Reversible? |
+|---|---|---|
+| 5.1 | Confirm Phase 0 copied correctly: `diff -rq "$SP/bacd06af-2e64-4e0c-bebd-15b29cb5b4c0/scratchpad/out" "$W/assets/source/out"` prints nothing | — |
+| 5.2 | `mkdir -p "$HOLD_INT/scratch" && cd "$SP" && mv bacd06af-2e64-4e0c-bebd-15b29cb5b4c0 d40f9136-bc7f-4e59-9e94-ad1602e9031c 50871254-7380-4e5a-bb36-22f9557049ce f4989a7a-6350-4b1f-b564-c30c3b1c4ed6 ab80205c-0d6f-437e-9d2f-db600c7fda68 "$HOLD_INT/scratch/"` | yes |
+| 5.3 | `cd "$SP" && rmdir 642f4900-048b-4b73-8364-5db585e10a98 af2bfcbe-2d49-4b5e-bb89-a9eab0a54c8f c333be8f-6931-49dc-98cf-6ade42753f4d 2>/dev/null; true` (empty folders) | yes |
+
+### Phase 6: Ask items, only the ones you approve
+
+| # | Step | Reversible? |
+|---|---|---|
+| 6.1 | In Premiere, relink the three `deliver_v1_no_photos` clips to `deliver/` and the `3D/images/find-my-way-…` audio to `3D/music/find-my-way-…`, then save | yes |
+| 6.2 | `mkdir -p "$R/archive/deliver_v1" && mv "$R/cut30/deliver_v1_no_photos/burrows_30s_WEB_1080p.mp4" "$R/archive/deliver_v1/" && mv "$R/cut30/deliver_v1_no_photos" "$HOLD_EXT/cut30/"` (4.6 GB) | yes |
+| 6.3 | `mv "/Users/jeffbannister/Desktop/Politics Local/Burrows 26/3D/images/find-my-way-2026-05-07-03-16-39-utc" "$HOLD_INT/"` (208 MB, after 6.1) | yes |
+| 6.4 | Long film dropped? `mv "$R/exr" "$R/overlays" "$HOLD_EXT/long/"` (97 GB) | yes, until emptied |
+| 6.5 | `.blend` checkpoints: `cd "$W/backups" && mv burrows_wnc_route_tour.pre_fog9.blend burrows_wnc_route_tour.pre_treeclear.blend burrows_wnc_route_tour.pre_wrapfix.blend burrows_wnc_route_tour.pre_labels.blend pre_cu_fix "$HOLD_INT/repo/"` (keeps `pre_logofit` and `pre_repath`) | yes |
+| 6.6 | After the final grade is approved: `mv "$HOME/Burrows Render Backups/cut30_pre_final_color_pass" "$W/cut30_preview/color_pass" "$HOLD_INT/backups/"` | yes |
+| 6.7 | Unused worktrees: `git -C /Users/jeffbannister/Code/burrows26 worktree remove .claude/worktrees/3d-logo-blender-texture-89fe6c` and the same for `dem-convention-slowmo-clips-7d0b95` (keep `ferguson…`, it has uncommitted research) | yes (branches remain) |
+| 6.8 | Premiere media cache (328 GB): clear it from Premiere (*Settings › Media Cache › Delete…*). Empty `$RECYCLE.BIN` yourself | **no** (cache is rebuilt as needed) |
+
+### Phase 7: empty the holding folders (wait a day or two; check the deliverables still play and both `.blend` files open with no missing textures)
+
+| # | Step | Reversible? |
+|---|---|---|
+| 7.1 | `du -sh "$HOLD_INT" "$HOLD_EXT"` to see what will go | — |
+| 7.2 | `rm -rf "$HOLD_EXT"` (frees the drive space) | **no** |
+| 7.3 | `rm -rf "$HOLD_INT"` (frees the internal space) | **no** |
+
+### Phase 8: once the spot is locked, archive the plate
+
+| # | Step | Reversible? |
+|---|---|---|
+| 8.1 | Copy `"$R/cut30/exr"` (57 GB) and `"$R/cut30/deliver"` to a second drive or cloud; verify with `rsync -anc --delete` (no output = identical) | yes (copy) |
+| 8.2 | Only after 8.1 is verified: delete `"$R/cut30/exr"`, `overlays/`, `comp/frames/` from HeleneOYOH | **no** on this drive (copy back from the archive, or 6–7 h to re-render) |

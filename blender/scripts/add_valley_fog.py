@@ -1,9 +1,9 @@
 """Headless: stacked translucent fog slices — valley pockets + an edge fog bank that hides the map tile borders.
 Cheap stand-in for volumetrics in Cycles. Strength is keyed per shot (wide = full, high aerial = partial, close = off)."""
-import bpy, json, math
+import bpy, json, math, os
 import numpy as np
 D = bpy.data; sc = bpy.context.scene
-OUT = "/private/tmp/claude-501/-Users-jeffbannister-Code-burrows26--claude-worktrees-burrows-vehicle-scene-nc-3161ff/bacd06af-2e64-4e0c-bebd-15b29cb5b4c0/scratchpad/out"
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "assets", "source", "out")  # build data (scripts/build/prep*.py write it)
 vec = json.load(open(f"{OUT}/vectors.json")); WKM, HKM = vec["map"]["w"], vec["map"]["h"]
 C0, C1 = int(sc["chase0"]), int(sc["chase1"])
 

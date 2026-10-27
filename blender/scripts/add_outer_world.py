@@ -1,8 +1,8 @@
 """Headless: outer terrain ring to the horizon, remove slab + edge haze, enlarge cloud decks."""
-import bpy, json
+import bpy, json, os
 import numpy as np
 D = bpy.data; sc = bpy.context.scene
-OUT = "/private/tmp/claude-501/-Users-jeffbannister-Code-burrows26--claude-worktrees-burrows-vehicle-scene-nc-3161ff/bacd06af-2e64-4e0c-bebd-15b29cb5b4c0/scratchpad/out"
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "assets", "source", "out")  # build data (scripts/build/prep*.py write it)
 meta = json.load(open(f"{OUT}/outer_meta.json")); RX, RY = meta["RX"], meta["RY"]
 Z = np.load(f"{OUT}/outer_z.npy"); ny, nx = Z.shape
 xs = np.linspace(-RX, RX, nx, dtype=np.float32); ys = np.linspace(RY, -RY, ny, dtype=np.float32)
