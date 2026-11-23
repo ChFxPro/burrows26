@@ -9,3 +9,7 @@ brand/headshots/
 promos/
 Burrows_NC119_Graphic_Pack.zip
 .impeccable/
+
+# Local environment files (may contain secrets)
+.env.*
+!.env.example
