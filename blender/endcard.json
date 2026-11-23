@@ -1,0 +1,15 @@
+{
+  "headline": "BURROWS SHOWS UP.",
+  "subline": "EVERY COUNTY. EVERY TIME.",
+  "cta": "VOTE EARLY THRU OCT 31",
+  "cta2": "ELECTION DAY NOV 3",
+  "disclaimer": "Paid for by Mark Burrows for NC House District 119",
+  "start_seconds": 25.75,
+  "fade_seconds": 0.5,
+  "tag": {
+    "concept": "B",
+    "start_frame": 613,
+    "frames": 204,
+    "note": "animated three.js end tag (endcard/, scripts/render_endtag.sh): tag frame 0 sits on film frame start_frame; the film runs to start_frame+frames-1 (816 = 34 s), holding the last comp frame past 720"
+  }
+}
