@@ -1,0 +1,27 @@
+{
+  "_comment": "Model strings change. Confirm against https://platform.openai.com/docs/guides/image-generation before a big run. gpt-image-1 is scheduled to deprecate 2026-10-23 — do not build on it.",
+  "tiers": {
+    "draft": {
+      "model": "gpt-image-1-mini",
+      "quality": "low",
+      "size": "1024x1536",
+      "approx_cost_usd": 0.006
+    },
+    "final": {
+      "model": "gpt-image-1-mini",
+      "quality": "high",
+      "size": "1024x1536",
+      "approx_cost_usd": 0.052
+    },
+    "flagship": {
+      "model": "gpt-image-2",
+      "quality": "high",
+      "size": "1024x1536",
+      "approx_cost_usd": 0.19
+    }
+  },
+  "default_tier": "draft",
+  "reference": "brand/00_REFERENCE_standard.png",
+  "headshot_dir": "brand/headshots",
+  "out_dir": "out"
+}

@@ -1,0 +1,11 @@
+.DS_Store
+._*
+*.tsbuildinfo
+.env
+node_modules/
+# Campaign media: archived on NORTHBEND (Client Work Archive/MarkBurrows NC HOUSE 119/burrows26-working-files_2026-11-23)
+Mark Burrows Headshots/
+brand/headshots/
+promos/
+Burrows_NC119_Graphic_Pack.zip
+.impeccable/

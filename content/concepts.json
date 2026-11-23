@@ -1,0 +1,77 @@
+{
+  "_comment": "One object per graphic. Every quote must be Mark's own words, with a source. Headlines are ALWAYS two words. Add new concepts by appending — do not edit approved ones in place.",
+  "concepts": [
+    {
+      "id": "tax-shift",
+      "status": "ready",
+      "headline": ["TAX", "SHIFT"],
+      "quote": "We're not paying lower taxes. We're paying different taxes.",
+      "highlight": "We're paying different taxes.",
+      "headshot": "MB-04_blazer_warm-smile.jpg",
+      "source": "Shifting Tax Burden.mov @ 32.5s — Mark's own words",
+      "topic": "Tax and Spend",
+      "county_emphasis": "Transylvania",
+      "notes": "Anchors the Aug 11 newsletter. Best line in the video library."
+    },
+    {
+      "id": "teacher-pay",
+      "status": "ready",
+      "headline": ["TEACHER", "PAY"],
+      "quote": "41 years ago my wife started teaching in North Carolina's public schools. Today teachers earn less than they did a decade ago.",
+      "highlight": "Today teachers earn less than they did a decade ago.",
+      "headshot": "MB-05_blazer_smile-turned.jpg",
+      "source": "Mark's own Facebook post, 2026-05-28",
+      "topic": "Teacher Pay",
+      "county_emphasis": "Jackson",
+      "notes": "Autobiographical rather than statistical. Historically a top-performing topic."
+    },
+    {
+      "id": "our-hospitals",
+      "status": "ready",
+      "headline": ["OUR", "HOSPITALS"],
+      "quote": "Local hospitals used to be the crown jewels of our communities. Now we stand by while services disappear.",
+      "highlight": "Now we stand by while services disappear.",
+      "headshot": "MB-06_blazer_serious.jpg",
+      "source": "Healthcare Vert.mov @ 0:00 — Mark's own words",
+      "topic": "Healthcare",
+      "county_emphasis": "Jackson",
+      "notes": "Sober subject — use the serious frame, not the smile."
+    },
+    {
+      "id": "the-job",
+      "status": "ready",
+      "headline": ["THE", "JOB"],
+      "quote": "Records requests take time. That's just part of the job.",
+      "highlight": "That's just part of the job.",
+      "headshot": "MB-09_whiteshirt_doorway_steady.jpg",
+      "source": "Transparency.mov @ 35.5s — Mark's own words",
+      "topic": "Accountability",
+      "county_emphasis": "All three",
+      "notes": "Direct follow-on to the Public Records flagship. Same wardrobe family — reads as a series."
+    },
+    {
+      "id": "rebuilding",
+      "status": "ready",
+      "headline": ["RE", "BUILDING"],
+      "quote": "State decisions about funding and rebuilding are what matter now. Planning and recovery is the work I've done for thirty years.",
+      "highlight": "Planning and recovery is the work I've done for thirty years.",
+      "headshot": "MB-13_hat-field_warm-smile.jpg",
+      "source": "Hurrican Vert.mov @ 23.6s — Mark's own words",
+      "topic": "Recovery",
+      "county_emphasis": "Swain",
+      "notes": "The Swain play. Hat earns its place here — content is about being out in the district."
+    },
+    {
+      "id": "half-a-day",
+      "status": "verify-first",
+      "headline": ["HALF A", "DAY"],
+      "quote": "Four and a half hours to renew your driver's license. That's half a day off work.",
+      "highlight": "That's half a day off work.",
+      "headshot": "MB-02_hat-polo_fullbody-smile.jpg",
+      "source": "Shifting Tax Burden.mov @ 43.1s — Mark's own words",
+      "topic": "Tax and Spend",
+      "county_emphasis": "All three",
+      "notes": "HOLD: confirm the DMV wait time is still current, or cut the number and keep only the second sentence."
+    }
+  ]
+}

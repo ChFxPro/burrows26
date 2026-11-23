@@ -38,6 +38,7 @@ import {
 } from './lib/format';
 import { FinanceIntelligence } from './pages/FinanceIntelligence';
 import { Nc119Analysis } from './pages/Nc119Analysis';
+import { SuccessionSituation } from './pages/SuccessionSituation';
 import { WinPath } from './pages/WinPath';
 import type { DashboardData } from './types';
 
@@ -64,7 +65,7 @@ const navItems = [
 ];
 
 type AppTab = 'overview' | 'admin';
-type AppRoute = 'dashboard' | 'analysis' | 'finance' | 'winPath';
+type AppRoute = 'dashboard' | 'analysis' | 'finance' | 'winPath' | 'succession';
 
 type TooltipRow = {
   color?: string;
@@ -195,6 +196,10 @@ const App = () => {
       return 'winPath';
     }
 
+    if (location.pathname.startsWith('/succession')) {
+      return 'succession';
+    }
+
     return 'dashboard';
   }, [location.pathname]);
 
@@ -313,6 +318,9 @@ const App = () => {
                 <NavLink to="/win-path" className={pageNavLinkClass}>
                   Win Path
                 </NavLink>
+                <NavLink to="/succession" className={pageNavLinkClass}>
+                  Succession
+                </NavLink>
               </nav>
             </div>
             <ThemeToggle
@@ -349,6 +357,9 @@ const App = () => {
                 </NavLink>
                 <NavLink to="/win-path" className={pageNavLinkClass}>
                   Win Path
+                </NavLink>
+                <NavLink to="/succession" className={pageNavLinkClass}>
+                  Succession
                 </NavLink>
               </nav>
             </div>
@@ -387,6 +398,9 @@ const App = () => {
                 <NavLink to="/win-path" className={pageNavLinkClass}>
                   Win Path
                 </NavLink>
+                <NavLink to="/succession" className={pageNavLinkClass}>
+                  Succession
+                </NavLink>
               </nav>
             </div>
             <ThemeToggle
@@ -397,6 +411,46 @@ const App = () => {
         </header>
         <main className="mx-auto w-full max-w-dashboard space-y-10 px-4 py-8 sm:px-6 lg:px-8">
           <FinanceIntelligence theme={theme} />
+        </main>
+      </div>
+    );
+  }
+
+  if (appRoute === 'succession') {
+    return (
+      <div className="min-h-screen text-slate-900 transition-colors duration-300 dark:text-slate-100">
+        <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/80 backdrop-blur-md transition-colors dark:border-slate-700/80 dark:bg-slate-950/80">
+          <div className="mx-auto flex w-full max-w-dashboard flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="inline-flex shrink-0 items-center rounded-lg bg-slate-900 px-2 py-1 shadow-sm ring-1 ring-slate-700 dark:bg-slate-950">
+                <img src={logoWhite} alt="NC119 Dashboard" className="h-8 w-auto sm:h-9" />
+              </div>
+              <nav aria-label="Page navigation" className="inline-flex rounded-lg border border-slate-300 bg-white p-1 dark:border-slate-600 dark:bg-slate-900">
+                <NavLink to="/" end className={pageNavLinkClass}>
+                  Dashboard
+                </NavLink>
+                <NavLink to="/analysis" className={pageNavLinkClass}>
+                  NC119 Analysis
+                </NavLink>
+                <NavLink to="/finance-intelligence" className={pageNavLinkClass}>
+                  Finance Intelligence
+                </NavLink>
+                <NavLink to="/win-path" className={pageNavLinkClass}>
+                  Win Path
+                </NavLink>
+                <NavLink to="/succession" className={pageNavLinkClass}>
+                  Succession
+                </NavLink>
+              </nav>
+            </div>
+            <ThemeToggle
+              theme={theme}
+              onToggle={() => setTheme((current) => (current === 'light' ? 'dark' : 'light'))}
+            />
+          </div>
+        </header>
+        <main className="mx-auto w-full max-w-dashboard space-y-10 px-4 py-8 sm:px-6 lg:px-8">
+          <SuccessionSituation />
         </main>
       </div>
     );
